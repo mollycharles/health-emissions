@@ -1,0 +1,431 @@
+Location ID,Location Name,2017 SDI Index Value,SDI Quintile
+1,Global,0.652205351,
+31,"Central Europe, Eastern Europe, and Central Asia",0.765735064,
+32,Central Asia,0.672778523,
+33,Armenia,0.702021479,High-middle SDI
+34,Azerbaijan,0.701169598,High-middle SDI
+35,Georgia,0.699719344,High-middle SDI
+36,Kazakhstan,0.735474229,High-middle SDI
+37,Kyrgyzstan,0.606646902,Low-middle SDI
+38,Mongolia,0.661854015,Middle SDI
+39,Tajikistan,0.522612209,Low-middle SDI
+40,Turkmenistan,0.696418617,Middle SDI
+41,Uzbekistan,0.629546531,Middle SDI
+42,Central Europe,0.813976167,
+43,Albania,0.684614242,Middle SDI
+44,Bosnia and Herzegovina,0.712609905,High-middle SDI
+45,Bulgaria,0.79173721,High-middle SDI
+46,Croatia,0.824844721,High SDI
+47,Czech Republic,0.850980459,High SDI
+48,Hungary,0.816804322,High-middle SDI
+49,Macedonia,0.75436361,High-middle SDI
+50,Montenegro,0.788188778,High-middle SDI
+51,Poland,0.84377326,High SDI
+52,Romania,0.784193905,High-middle SDI
+53,Serbia,0.75179332,High-middle SDI
+54,Slovakia,0.841690487,High SDI
+55,Slovenia,0.860279598,High SDI
+56,Eastern Europe,0.785420363,
+57,Belarus,0.772665439,High-middle SDI
+58,Estonia,0.857709406,High SDI
+59,Latvia,0.825131484,High SDI
+60,Lithuania,0.840877452,High SDI
+61,Moldova,0.675572758,Middle SDI
+62,Russian Federation,0.791738063,High-middle SDI
+63,Ukraine,0.740061596,High-middle SDI
+64,High-income,0.854428248,
+70,Australasia,0.868509969,
+71,Australia,0.873188291,High SDI
+72,New Zealand,0.842273544,High SDI
+65,High-income Asia Pacific,0.86894981,
+66,Brunei,0.856240565,High SDI
+67,Japan,0.865093512,High SDI
+35446,Aichi,0.874998978,High SDI
+35428,Akita,0.829009097,High SDI
+35425,Aomori,0.825175188,High SDI
+35435,Chiba,0.859238574,High SDI
+35461,Ehime,0.838399264,High SDI
+35441,Fukui,0.852281964,High SDI
+35463,Fukuoka,0.855307883,High SDI
+35430,Fukushima,0.830930555,High SDI
+35444,Gifu,0.84923591,High SDI
+35433,Gunma,0.850963336,High SDI
+35457,Hiroshima,0.862595627,High SDI
+35424,Hokkaido,0.841522308,High SDI
+35451,Hyogo,0.859765235,High SDI
+35431,Ibaraki,0.850665189,High SDI
+35440,Ishikawa,0.856039392,High SDI
+35426,Iwate,0.825241842,High SDI
+35460,Kagawa,0.849935485,High SDI
+35469,Kagoshima,0.829680279,High SDI
+35437,Kanagawa,0.874939342,High SDI
+35462,Kochi,0.825446834,High SDI
+35466,Kumamoto,0.831536501,High SDI
+35449,Kyoto,0.87256007,High SDI
+35447,Mie,0.853567757,High SDI
+35427,Miyagi,0.850313137,High SDI
+35468,Miyazaki,0.823112655,High SDI
+35443,Nagano,0.851209245,High SDI
+35465,Nagasaki,0.826141869,High SDI
+35452,Nara,0.847998888,High SDI
+35438,Niigata,0.843300137,High SDI
+35467,Oita,0.845989117,High SDI
+35456,Okayama,0.855866898,High SDI
+35470,Okinawa,0.817915416,High SDI
+35450,Osaka,0.872366437,High SDI
+35464,Saga,0.833665065,High SDI
+35434,Saitama,0.8520121,High SDI
+35448,Shiga,0.870844353,High SDI
+35455,Shimane,0.831040466,High SDI
+35445,Shizuoka,0.858790953,High SDI
+35432,Tochigi,0.853264467,High SDI
+35459,Tokushima,0.845285,High SDI
+35436,Tokyo,0.924328028,High SDI
+35454,Tottori,0.83436659,High SDI
+35439,Toyama,0.859824207,High SDI
+35453,Wakayama,0.839775092,High SDI
+35429,Yamagata,0.831923683,High SDI
+35458,Yamaguchi,0.849441807,High SDI
+35442,Yamanashi,0.854296098,High SDI
+68,South Korea,0.871955704,High SDI
+69,Singapore,0.872215248,High SDI
+100,High-income North America,0.868169406,
+101,Canada,0.882086227,High SDI
+349,Greenland,0.760075292,High-middle SDI
+102,United States,0.86662166,High SDI
+523,Alabama,0.837233514,High SDI
+524,Alaska,0.86060992,High SDI
+525,Arizona,0.845107314,High SDI
+526,Arkansas,0.826148933,High SDI
+527,California,0.872398094,High SDI
+528,Colorado,0.882128544,High SDI
+529,Connecticut,0.906486727,High SDI
+530,Delaware,0.873744053,High SDI
+531,District of Columbia,0.890203139,High SDI
+532,Florida,0.863631092,High SDI
+533,Georgia,0.848426298,High SDI
+534,Hawaii,0.872290363,High SDI
+535,Idaho,0.840713155,High SDI
+536,Illinois,0.879386003,High SDI
+537,Indiana,0.84792909,High SDI
+538,Iowa,0.8704793,High SDI
+539,Kansas,0.864464964,High SDI
+540,Kentucky,0.83130395,High SDI
+541,Louisiana,0.834894869,High SDI
+542,Maine,0.872309993,High SDI
+543,Maryland,0.895667105,High SDI
+544,Massachusetts,0.913307727,High SDI
+545,Michigan,0.867717003,High SDI
+546,Minnesota,0.892987345,High SDI
+547,Mississippi,0.818942009,High SDI
+548,Missouri,0.85325798,High SDI
+549,Montana,0.863383139,High SDI
+550,Nebraska,0.87308561,High SDI
+551,Nevada,0.847315003,High SDI
+552,New Hampshire,0.904304115,High SDI
+553,New Jersey,0.899124902,High SDI
+554,New Mexico,0.835274776,High SDI
+555,New York,0.893442339,High SDI
+556,North Carolina,0.84978326,High SDI
+557,North Dakota,0.879820384,High SDI
+558,Ohio,0.858271211,High SDI
+559,Oklahoma,0.838181089,High SDI
+560,Oregon,0.870700326,High SDI
+561,Pennsylvania,0.878553277,High SDI
+562,Rhode Island,0.890036984,High SDI
+563,South Carolina,0.846024965,High SDI
+564,South Dakota,0.860188872,High SDI
+565,Tennessee,0.836985155,High SDI
+566,Texas,0.837777472,High SDI
+567,Utah,0.855766922,High SDI
+568,Vermont,0.89559193,High SDI
+569,Virginia,0.885122306,High SDI
+570,Washington,0.88440099,High SDI
+571,West Virginia,0.824706332,High SDI
+572,Wisconsin,0.87773172,High SDI
+573,Wyoming,0.869345173,High SDI
+96,Southern Latin America,0.720171023,
+97,Argentina,0.710150584,High-middle SDI
+98,Chile,0.748081344,High-middle SDI
+99,Uruguay,0.706753401,High-middle SDI
+73,Western Europe,0.856820142,
+74,Andorra,0.901838419,High SDI
+75,Austria,0.866029424,High SDI
+76,Belgium,0.886479194,High SDI
+77,Cyprus,0.86457342,High SDI
+78,Denmark,0.917864091,High SDI
+79,Finland,0.892872363,High SDI
+80,France,0.864667258,High SDI
+81,Germany,0.869902009,High SDI
+82,Greece,0.816993531,High SDI
+83,Iceland,0.907023083,High SDI
+84,Ireland,0.882181159,High SDI
+85,Israel,0.81594436,High-middle SDI
+86,Italy,0.843401161,High SDI
+87,Luxembourg,0.915748227,High SDI
+88,Malta,0.835898842,High SDI
+89,Netherlands,0.911855053,High SDI
+90,Norway,0.910905362,High SDI
+91,Portugal,0.777927627,High-middle SDI
+92,Spain,0.824616837,High SDI
+93,Sweden,0.883490275,High SDI
+4944,Stockholm,0.914447593,High SDI
+4940,Sweden except Stockholm,0.872833379,High SDI
+94,Switzerland,0.888752501,High SDI
+95,United Kingdom,0.843093074,High SDI
+4749,England,0.848869853,High SDI
+4621,East Midlands,0.83007704,High SDI
+4623,East of England,0.840300066,High SDI
+4624,Greater London,0.894369062,High SDI
+4618,North East England,0.820735615,High SDI
+4619,North West England,0.833664296,High SDI
+4625,South East England,0.856169812,High SDI
+4626,South West England,0.841270041,High SDI
+4622,West Midlands,0.829368047,High SDI
+4620,Yorkshire and the Humber,0.829690925,High SDI
+433,Northern Ireland,0.835352065,High SDI
+434,Scotland,0.805372811,High SDI
+4636,Wales,0.805748561,High SDI
+103,Latin America and Caribbean,0.639865451,
+120,Andean Latin America,0.628313955,
+121,Bolivia,0.587409304,Low-middle SDI
+122,Ecuador,0.635566909,Middle SDI
+123,Peru,0.635787809,Middle SDI
+104,Caribbean,0.637604561,
+105,Antigua and Barbuda,0.715130979,High-middle SDI
+106,The Bahamas,0.75556215,High-middle SDI
+107,Barbados,0.739423177,High-middle SDI
+108,Belize,0.602243591,Low-middle SDI
+305,Bermuda,0.80545317,High-middle SDI
+109,Cuba,0.687667664,Middle SDI
+110,Dominica,0.68658657,Middle SDI
+111,Dominican Republic,0.592640504,Low-middle SDI
+112,Grenada,0.640418422,Middle SDI
+113,Guyana,0.583747015,Low-middle SDI
+114,Haiti,0.441665969,Low SDI
+115,Jamaica,0.678532504,Middle SDI
+385,Puerto Rico,0.812984477,High-middle SDI
+116,Saint Lucia,0.652614198,Middle SDI
+117,Saint Vincent and the Grenadines,0.608304473,Middle SDI
+118,Suriname,0.64099299,Middle SDI
+119,Trinidad and Tobago,0.698405348,Middle SDI
+422,"Virgin Islands, U.S.",0.806568682,High-middle SDI
+124,Central Latin America,0.623192305,
+125,Colombia,0.633692252,Middle SDI
+126,Costa Rica,0.662129526,Middle SDI
+127,El Salvador,0.59309467,Low-middle SDI
+128,Guatemala,0.524214498,Low-middle SDI
+129,Honduras,0.512339813,Low-middle SDI
+130,Mexico,0.628360997,Middle SDI
+4643,Aguascalientes,0.659089353,Middle SDI
+4644,Baja California,0.656785464,Middle SDI
+4645,Baja California Sur,0.658976353,Middle SDI
+4646,Campeche,0.615914899,Middle SDI
+4649,Chiapas,0.53276266,Middle SDI
+4650,Chihuahua,0.638589391,Middle SDI
+4647,Coahuila,0.645326148,Middle SDI
+4648,Colima,0.65420353,Middle SDI
+4652,Durango,0.623979236,Middle SDI
+4653,Guanajuato,0.62129178,Middle SDI
+4654,Guerrero,0.562442968,Middle SDI
+4655,Hidalgo,0.587458446,Middle SDI
+4656,Jalisco,0.648991934,Middle SDI
+4657,Mexico,0.635428465,Middle SDI
+4651,Mexico City,0.715772109,Middle SDI
+4658,Michoacan de Ocampo,0.58646838,Middle SDI
+4659,Morelos,0.635471941,Middle SDI
+4660,Nayarit,0.620025881,Middle SDI
+4661,Nuevo Leon,0.677420872,Middle SDI
+4662,Oaxaca,0.560543467,Middle SDI
+4663,Puebla,0.584252823,Middle SDI
+4664,Queretaro,0.639127345,Middle SDI
+4665,Quintana Roo,0.626303085,Middle SDI
+4666,San Luis Potosi,0.620944629,Middle SDI
+4667,Sinaloa,0.648534168,Middle SDI
+4668,Sonora,0.650495685,Middle SDI
+4669,Tabasco,0.611463527,Middle SDI
+4670,Tamaulipas,0.647006129,Middle SDI
+4671,Tlaxcala,0.604441163,Middle SDI
+4672,Veracruz de Ignacio de la Llave,0.591994,Middle SDI
+4673,Yucatan,0.63033024,Middle SDI
+4674,Zacatecas,0.607654208,Middle SDI
+131,Nicaragua,0.529616174,Low-middle SDI
+132,Panama,0.677043867,Middle SDI
+133,Venezuela,0.655413104,Middle SDI
+134,Tropical Latin America,0.662126282,
+135,Brazil,0.663312473,Middle SDI
+4750,Acre,0.601605235,Low-middle SDI
+4751,Alagoas,0.555715012,Low-middle SDI
+4753,Amapa,0.658517629,Middle SDI
+4752,Amazonas,0.629315711,Middle SDI
+4754,Bahia,0.591019766,Low-middle SDI
+4755,Ceara,0.599501511,Low-middle SDI
+4756,Distrito Federal,0.79189036,High-middle SDI
+4757,Espirito Santo,0.676646695,Middle SDI
+4758,Goias,0.650146424,Middle SDI
+4759,Maranhao,0.507040138,Low-middle SDI
+4762,Mato Grosso,0.662454796,Middle SDI
+4761,Mato Grosso do Sul,0.650210546,Middle SDI
+4760,Minas Gerais,0.660795264,Middle SDI
+4763,Para,0.578664243,Low-middle SDI
+4764,Paraiba,0.574462555,Low-middle SDI
+4765,Parana,0.682436727,Middle SDI
+4766,Pernambuco,0.593552542,Low-middle SDI
+4767,Piaui,0.551619925,Low-middle SDI
+4768,Rio de Janeiro,0.708855843,High-middle SDI
+4769,Rio Grande do Norte,0.605294307,Low-middle SDI
+4772,Rio Grande do Sul,0.6927427,Middle SDI
+4770,Rondonia,0.621702361,Middle SDI
+4771,Roraima,0.646354751,Middle SDI
+4773,Santa Catarina,0.702495682,High-middle SDI
+4775,Sao Paulo,0.7200519,High-middle SDI
+4774,Sergipe,0.615627706,Middle SDI
+4776,Tocantins,0.610879077,Middle SDI
+136,Paraguay,0.618769591,Middle SDI
+137,North Africa and Middle East,0.638603537,
+138,North Africa and Middle East,0.638603537,
+160,Afghanistan,0.290254968,Low SDI
+139,Algeria,0.695849021,Middle SDI
+140,Bahrain,0.712258604,High-middle SDI
+141,Egypt,0.604307711,Low-middle SDI
+142,Iran,0.700086759,High-middle SDI
+143,Iraq,0.584823813,Low-middle SDI
+144,Jordan,0.696845045,Middle SDI
+145,Kuwait,0.785593198,High-middle SDI
+146,Lebanon,0.729621127,High-middle SDI
+147,Libya,0.760934217,High-middle SDI
+148,Morocco,0.579231309,Low-middle SDI
+149,Palestine,0.541353069,Low-middle SDI
+150,Oman,0.743531097,High-middle SDI
+151,Qatar,0.765715882,High-middle SDI
+152,Saudi Arabia,0.7790137,High-middle SDI
+522,Sudan,0.477915229,Low-middle SDI
+153,Syria,0.611084286,Middle SDI
+154,Tunisia,0.675428611,Middle SDI
+155,Turkey,0.729481001,High-middle SDI
+156,United Arab Emirates,0.794722025,High-middle SDI
+157,Yemen,0.429504407,Low SDI
+158,South Asia,0.533975763,
+159,South Asia,0.533975763,
+161,Bangladesh,0.457988721,Low SDI
+162,Bhutan,0.569907913,Low-middle SDI
+163,India,0.550242018,Low-middle SDI
+164,Nepal,0.428511471,Low SDI
+165,Pakistan,0.492158484,Low-middle SDI
+4,"Southeast Asia, East Asia, and Oceania",0.685403755,
+5,East Asia,0.708630758,
+6,China,0.707319288,High-middle SDI
+7,North Korea,0.537679957,Low-middle SDI
+8,Taiwan,0.86418562,High SDI
+21,Oceania,0.470985744,
+298,American Samoa,0.701859796,High-middle SDI
+25,Federated States of Micronesia,0.575251612,Low-middle SDI
+22,Fiji,0.641435501,Middle SDI
+351,Guam,0.794193119,High-middle SDI
+23,Kiribati,0.426768011,Low SDI
+24,Marshall Islands,0.550457832,Low-middle SDI
+376,Northern Mariana Islands,0.75781722,High-middle SDI
+26,Papua New Guinea,0.418998443,Low SDI
+27,Samoa,0.576375166,Low-middle SDI
+28,Solomon Islands,0.425018528,Low SDI
+29,Tonga,0.624951156,Middle SDI
+30,Vanuatu,0.475309121,Low-middle SDI
+9,Southeast Asia,0.640717246,
+10,Cambodia,0.481619391,Low-middle SDI
+11,Indonesia,0.647611359,Middle SDI
+4709,Aceh,0.640414411,Middle SDI
+4726,Bali,0.646777358,Middle SDI
+4717,Bangka-Belitung Islands,0.637063919,Middle SDI
+4725,Banten,0.636136405,Middle SDI
+4715,Bengkulu,0.605588458,Low-middle SDI
+4737,Gorontalo,0.556881893,Low-middle SDI
+4720,Jakarta,0.795041917,High-middle SDI
+4713,Jambi,0.640546524,Middle SDI
+4721,West Java,0.635672599,Middle SDI
+4722,Central Java,0.606724047,Middle SDI
+4724,East Java,0.64169154,Middle SDI
+4729,West Kalimantan,0.589201584,Low-middle SDI
+4731,South Kalimantan,0.623798672,Middle SDI
+4730,Central Kalimantan,0.641894718,Middle SDI
+4732,East Kalimantan,0.746595227,High-middle SDI
+4719,North Kalimantan,0.755952734,High-middle SDI
+4718,Riau Islands,0.727599596,High-middle SDI
+4716,Lampung,0.616299987,Middle SDI
+4739,Maluku,0.555610326,Low-middle SDI
+4740,North Maluku,0.546157963,Low-middle SDI
+4727,West Nusa Tenggara,0.556566054,Low-middle SDI
+4728,East Nusa Tenggara,0.518912804,Low-middle SDI
+4742,Papua,0.587862719,Low-middle SDI
+4741,West Papua,0.683007739,Middle SDI
+4712,Riau,0.713955299,High-middle SDI
+4738,West Sulawesi,0.559336878,Low-middle SDI
+4735,South Sulawesi,0.610967812,Middle SDI
+4734,Central Sulawesi,0.612199879,Middle SDI
+4736,Southeast Sulawesi,0.596388581,Low-middle SDI
+4733,North Sulawesi,0.651649236,Middle SDI
+4711,West Sumatra,0.640858055,Middle SDI
+4714,South Sumatra,0.642344679,Middle SDI
+4710,North Sumatra,0.653390877,Middle SDI
+4723,Yogyakarta,0.65012062,Middle SDI
+12,Laos,0.518788871,Low-middle SDI
+13,Malaysia,0.759248836,High-middle SDI
+14,Maldives,0.655286841,Middle SDI
+183,Mauritius,0.720190502,High-middle SDI
+15,Myanmar,0.555817824,Low-middle SDI
+16,Philippines,0.617174396,Middle SDI
+17,Sri Lanka,0.679706328,Middle SDI
+186,Seychelles,0.692334035,Middle SDI
+18,Thailand,0.684276785,Middle SDI
+19,Timor-Leste,0.504842989,Low-middle SDI
+20,Vietnam,0.606829222,Middle SDI
+166,Sub-Saharan Africa,0.445980066,
+167,Central Sub-Saharan Africa,0.45690943,
+168,Angola,0.460535938,Low-middle SDI
+169,Central African Republic,0.334449009,Low SDI
+170,Congo,0.574129526,Low-middle SDI
+171,Democratic Republic of the Congo,0.364453165,Low SDI
+172,Equatorial Guinea,0.62522322,Middle SDI
+173,Gabon,0.650559028,Middle SDI
+174,Eastern Sub-Saharan Africa,0.387060963,
+175,Burundi,0.309705632,Low SDI
+176,Comoros,0.434289553,Low SDI
+177,Djibouti,0.484750347,Low-middle SDI
+178,Eritrea,0.408790995,Low SDI
+179,Ethiopia,0.334181415,Low SDI
+180,Kenya,0.499471993,Low-middle SDI
+181,Madagascar,0.330760552,Low SDI
+182,Malawi,0.349345085,Low SDI
+184,Mozambique,0.340470577,Low SDI
+185,Rwanda,0.40744149,Low SDI
+187,Somalia,0.234806633,Low SDI
+435,South Sudan,0.274705978,Low SDI
+189,Tanzania,0.412207128,Low SDI
+190,Uganda,0.387738241,Low SDI
+191,Zambia,0.472213354,Low-middle SDI
+192,Southern Sub-Saharan Africa,0.639979771,
+193,Botswana,0.663238118,Middle SDI
+194,Lesotho,0.493356884,Low-middle SDI
+195,Namibia,0.615792035,Middle SDI
+196,South Africa,0.676542582,Middle SDI
+197,Swaziland,0.577699713,Low-middle SDI
+198,Zimbabwe,0.463195841,Low-middle SDI
+199,Western Sub-Saharan Africa,0.441032713,
+200,Benin,0.373374857,Low SDI
+201,Burkina Faso,0.283938202,Low SDI
+202,Cameroon,0.482039386,Low-middle SDI
+203,Cape Verde,0.549086441,Low-middle SDI
+204,Chad,0.252901641,Low SDI
+205,Cote d'Ivoire,0.412139874,Low SDI
+206,The Gambia,0.404759628,Low SDI
+207,Ghana,0.536972566,Low-middle SDI
+208,Guinea,0.324710505,Low SDI
+209,Guinea-Bissau,0.348986787,Low SDI
+210,Liberia,0.328416338,Low SDI
+211,Mali,0.266900909,Low SDI
+212,Mauritania,0.470565798,Low-middle SDI
+213,Niger,0.190617687,Low SDI
+214,Nigeria,0.49339389,Low-middle SDI
+215,Sao Tome and Principe,0.488258275,Low-middle SDI
+216,Senegal,0.373026564,Low SDI
+217,Sierra Leone,0.357159036,Low SDI
+218,Togo,0.413313302,Low SDI

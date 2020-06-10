@@ -1,0 +1,246 @@
+Country_CEDS,iso,Country_GBD,location_id,Country_GCA
+ Afghanistan    ,afg,Afghanistan,160,Afghanistan
+ Albania        ,alb,Albania,43,Albania
+ Algeria        ,dza,Algeria,139,Algeria
+ American Samoa ,asm,American Samoa,298,
+ Angola         ,ago,Angola,168,Angola
+ Antarctic Fishe,NA,,,
+ Antigua/Barbuda,atg,Antigua and Barbuda,105,Antigua and Barbuda
+ Argentina      ,arg,Argentina,97,Argentina
+ Armenia        ,arm,Armenia,33,Armenia
+ Aruba          ,abw,,,Aruba
+ Australia      ,aus,Australia,71,Australia
+ Austria        ,aut,Austria,75,Austria
+ Azerbaijan     ,aze,Azerbaijan,34,Azerbaijan
+ Bahamas        ,bhs,The Bahamas,106,Bahamas
+ Bahrain        ,bhr,Bahrain,140,Bahrain
+ Bangladesh     ,bgd,Bangladesh,161,Bangladesh
+ Barbados       ,brb,Barbados,107,Barbados
+ Belarus        ,blr,Belarus,57,Belarus
+ Belgium        ,bel,Belgium,76,Belgium
+ Belize         ,blz,Belize,108,Belize
+ Benin          ,ben,Benin,200,Benin
+ Bermuda        ,bmu,Bermuda,305,Bermuda
+ Bhutan         ,btn,Bhutan,162,Bhutan
+ Bolivia        ,bol,Bolivia,121,Bolivia
+ Bosnia-Herzegov,bih,Bosnia and Herzegovina,44,Bosnia and Herzegovina
+ Botswana       ,bwa,Botswana,193,Botswana
+ Brazil         ,bra,Brazil,135,Brazil
+ British Virgin ,vgb,,,British Virgin Islands
+ Brunei Darussal,brn,Brunei,66,Brunei Darussalam
+ Bulgaria       ,bgr,Bulgaria,45,Bulgaria
+ Burkina Faso   ,bfa,Burkina Faso,201,Burkina Faso
+ Burundi        ,bdi,Burundi,175,Burundi
+ Cambodia       ,khm,Cambodia,10,Cambodia
+ Cameroon       ,cmr,Cameroon,202,Cameroon
+ Canada         ,can,Canada,101,Canada
+ Cape Verde     ,cpv,Cape Verde,203,Cape Verde
+ Cayman Island  ,cym,,,Cayman Islands
+ Central African,caf,Central African Republic,169,Central African Republic
+ Chad           ,tcd,Chad,204,Chad
+ Chile          ,chl,Chile,98,Chile
+ China          ,chn,China,6,China
+ Chinese Taipei ,twn,Taiwan,8,Taiwan
+ Colombia       ,col,Colombia,125,Colombia
+ Comoros        ,com,Comoros,176,Comoros
+ Congo          ,cog,Congo,170,Congo
+ Cook Islands   ,cok,,,Cook Islands
+ Costa Rica     ,cri,Costa Rica,126,Costa Rica
+ Cote d'Ivoire  ,civ,Cote d'Ivoire,205,Côte d'Ivoire
+ Croatia        ,hrv,Croatia,46,Croatia
+ Cuba           ,cub,Cuba,109,Cuba
+ Cyprus         ,cyp,Cyprus,77,Cyprus
+ Czech Republic ,cze,Czech Republic,47,Czech Republic
+ Czechoslovakia ,csk,,,
+ Dem. Republic C,cod,Democratic Republic of the Congo,171,Democratic Republic of the Congo
+ Democratic Yeme,yem,,,
+ Denmark        ,dnk,Denmark,78,Denmark
+ Djibouti       ,dji,Djibouti,177,Djibouti
+ Dominica       ,dma,Dominica,110,Dominica
+ Dominican Repub,dom,Dominican Republic,111,Dominican Republic
+ E&W Pakistan   ,pak,,,
+ Ecuador        ,ecu,Ecuador,122,Ecuador
+ Egypt          ,egy,Egypt,141,Egypt
+ El Salvador    ,slv,El Salvador,127,El Salvador
+ Equatorial Guin,gnq,Equatorial Guinea,172,Equatorial Guinea
+ Eritrea        ,eri,Eritrea,178,Eritrea
+ Estonia Islands,est,Estonia,58,Estonia
+ Ethiopia       ,eth,Ethiopia,179,Ethiopia
+ Ethiopia (incl ,eth,,,
+ Faeroe Islands ,fro,,,Faeroe Islands
+ Falkland Island,flk,,,Falkland Islands (Malvinas)
+ Fiji           ,fji,Fiji,22,Fiji
+ Finland        ,fin,Finland,79,Finland
+ France         ,fra,France,80,France
+ French Equatori,NA,,,
+ French Guiana  ,guf,,,French Guiana
+ French Indochin,NA,,,
+ French Polynesi,pyf,,,French Polynesia
+ French West Afr,NA,,,
+ Gabon          ,gab,Gabon,173,Gabon
+ Gambia         ,gmb,The Gambia,206,Gambia
+ Georgia        ,geo,Georgia,35,Georgia
+ Germany        ,deu,Germany,81,Germany
+ Germany: Democr,deu,,,
+ Germany: Federa,deu,,,
+ Ghana          ,gha,Ghana,207,Ghana
+ Gibraltar      ,gib,,,Gibraltar
+ Greece         ,grc,Greece,82,Greece
+ Greenland      ,grl,Greenland,349,Greenland
+ Grenada        ,grd,Grenada,112,Grenada
+ Guadeloupe     ,glp,,,Guadeloupe
+ Guam           ,gum,Guam,351,
+ Guatemala      ,gtm,Guatemala,128,Guatemala
+ Guernsey       ,NA,,,
+ Guinea         ,gin,Guinea,208,Guinea
+ Guinea Bissau  ,gnb,Guinea-Bissau,209,Guinea-Bissau
+ Guyana         ,guy,Guyana,113,Guyana
+ Haiti          ,hti,Haiti,114,Haiti
+ Honduras       ,hnd,Honduras,129,Honduras
+ Hong Kong      ,hkg,,,Hong Kong
+ Hungary        ,hun,Hungary,48,Hungary
+ Iceland        ,isl,Iceland,83,Iceland
+ India          ,ind,India,163,India
+ Indonesia      ,idn,Indonesia,11,Indonesia
+ Iran           ,irn,Iran,142,Iran
+ Iraq           ,irq,Iraq,143,Iraq
+ Ireland        ,irl,Ireland,84,Ireland
+ Isle of Man    ,irn,,,
+ Israel         ,isr,Israel,85,Israel
+ Italy          ,ita,Italy,86,Italy
+ Jamaica        ,jam,Jamaica,115,Jamaica
+ Japan          ,jpn,Japan,67,Japan
+ Japan (<1973)  ,jpn,,,
+ Jersey         ,NA,,,
+ Jordan         ,jor,Jordan,144,Jordan
+ Kazakhstan     ,kaz,Kazakhstan,36,Kazakhstan
+ Kenya          ,ken,Kenya,180,Kenya
+ Kiribati       ,kir,Kiribati,23,Kiribati
+ Korea: Dem Peop,prk,North Korea,7,North Korea
+ Korea: Republic,kor,South Korea,68,South Korea
+ Kuwait         ,kwt,Kuwait,145,Kuwait
+ Kyrgyzstan     ,kgz,Kyrgyzstan,37,Kyrgyzstan
+ Lao: Peoples De,lao,Laos,12,Laos
+ Latvia         ,lva,Latvia,59,Latvia
+ Lebanon        ,lbn,Lebanon,146,Lebanon
+ Lesotho        ,lso,Lesotho,194,Lesotho
+ Liberia        ,lbr,Liberia,210,Liberia
+ Libyan Arab Jam,lby,Libya,147,Libya
+ Liechtenstein  ,lie,,,Liechtenstein
+ Lithuania      ,ltu,Lithuania,60,Lithuania
+ Luxembourg     ,lux,Luxembourg,87,Luxembourg
+ Macau          ,mac,,,Macao
+ Macedonia TFYR ,mkd,Macedonia,49,Macedonia (Republic of)
+ Madagascar     ,mdg,Madagascar,181,Madagascar
+ Malawi         ,mwi,Malawi,182,Malawi
+ Malaysia       ,mys,Malaysia,13,Malaysia
+ Maldives       ,mdv,Maldives,14,Maldives
+ Mali           ,mli,Mali,211,Mali
+ Malta          ,mlt,Malta,88,Malta
+ Martinique     ,mtq,,,Martinique
+ Mauritania     ,mrt,Mauritania,212,Mauritania
+ Mauritius      ,mus,Mauritius,183,Mauritius
+ Mexico         ,mex,Mexico,130,Mexico
+ Micronesia     ,fsm,Federated States of Micronesia,25,Micronesia (Federated States of)
+ Moldova Rep. of,mda,Moldova,61,Moldova
+ Monaco         ,NA,,,
+ Mongolia       ,mng,Mongolia,38,Mongolia
+ Montserrat (195,msr,,,Montserrat
+ Morocco        ,mar,Morocco,148,Morocco
+ Mozambique     ,moz,Mozambique,184,Mozambique
+ Myanmar        ,mmr,Myanmar,15,Myanmar
+ Namibia        ,nam,Namibia,195,Namibia
+ Nauru          ,NA,,,Nauru
+ Nepal          ,npl,Nepal,164,Nepal
+ Netherlands    ,nld,Netherlands,89,Netherlands
+ Netherlands Ant,ant,,,
+ New Caledonia  ,ncl,,,New Caledonia
+ New Zealand    ,nzl,New Zealand,72,New Zealand
+ Nicaragua      ,nic,Nicaragua,131,Nicaragua
+ Niger          ,ner,Niger,213,Niger
+ Nigeria        ,nga,Nigeria,214,Nigeria
+ Niue           ,niu,,,Niue
+ Norway         ,nor,Norway,90,Norway
+ Oman           ,omn,Oman,150,Oman
+ Other Africa   ,NA,,,
+ Other Asia     ,NA,,,
+ Other Latin Ame,NA,,,
+ Pacific Islands,NA,,,
+ Pakistan       ,pak,Pakistan,165,Pakistan
+ Panama         ,pan,Panama,132,Panama
+ Panama Canal Zo,NA,,,
+ Papua New Guine,png,Papua New Guinea,26,Papua New Guinea
+ Paraguay       ,pry,Paraguay,136,Paraguay
+ Peninsular Mala,NA,,,
+ Peru           ,per,Peru,123,Peru
+ Philippines    ,phl,Philippines,16,Philippines
+ Poland         ,pol,Poland,51,Poland
+ Portugal       ,prt,Portugal,91,Portugal
+ Puerto Rico    ,pri,Puerto Rico,385,
+ Qatar          ,qat,Qatar,151,Qatar
+ Reunion        ,reu,,,Réunion
+ Rhodesia-Nyasal,NA,,,
+ Romania        ,rou,Romania,52,Romania
+ Russian Federat,rus,Russian Federation,62,Russian Federation
+ Rwanda-Urundi  ,rwa,Rwanda,185,Rwanda
+ S. Africa: Cust,NA,,,
+ Sabah          ,NA,,,
+ Samoa          ,wsm,Samoa,27,Samoa
+ Sao Tome & Prin,stp,Sao Tome and Principe,215,Sao Tome and Principe
+ Sarawak        ,NA,,,
+ Saudi Arabia   ,sau,Saudi Arabia,152,Saudi Arabia
+ Senegal        ,sen,Senegal,216,Senegal
+ Serbia and Mont,scg,Serbia,53,Serbia
+ Seychelles     ,syc,Seychelles,186,Seychelles
+ Sierra Leone   ,sle,Sierra Leone,217,Sierra Leone
+ Singapore      ,sgp,Singapore,69,Singapore
+ Slovak Republic,svk,Slovakia,54,Slovakia
+ Slovenia       ,svn,Slovenia,55,Slovenia
+ Solomon Islands,slb,Solomon Islands,28,Solomon Islands
+ Somalia        ,som,Somalia,187,Somalia
+ South Africa   ,zaf,South Africa,196,South Africa
+ Spain          ,esp,Spain,92,Spain
+ Sri Lanka      ,lka,Sri Lanka,17,Sri Lanka
+ St. Helena     ,NA,,,Saint Helena
+ St. Kitts-Nevis,kna,,,Saint Kitts and Nevis
+ St. Lucia      ,lca,Saint Lucia,116,Saint Lucia
+ St. Pierre & Mi,spm,,,Saint Pierre and Miquelon
+ St. Vincent & G,vct,Saint Vincent and the Grenadines,117,Saint Vincent and the Grenadines
+ Sudan          ,sdn,Sudan,522,Sudan
+ Suriname       ,sur,Suriname,118,Suriname
+ Swaziland      ,swz,Swaziland,197,Swaziland
+ Sweden         ,swe,Sweden,93,Sweden
+ Switzerland    ,che,Switzerland,94,Switzerland
+ Syrian Arab Rep,syr,Syria,153,Syria
+ Tajikistan     ,tjk,Tajikistan,39,Tajikistan
+ Tanganyika     ,tza,,,
+ Tanzania       ,tza,Tanzania,189,Tanzania
+ Thailand       ,tha,Thailand,18,Thailand
+ Togo           ,tgo,Togo,218,Togo
+ Tonga          ,ton,Tonga,29,Tonga
+ Trinidad & Toba,tto,Trinidad and Tobago,119,Trinidad and Tobago
+ Tunisia        ,tun,Tunisia,154,Tunisia
+ Turkey         ,tur,Turkey,155,Turkey
+ Turkmenistan   ,tkm,Turkmenistan,40,Turkmenistan
+ Turks & Caicos ,tca,,,Turks and Caicos Islands
+ U.S. Virgin Isl,vir,"Virgin Islands, U.S.",422,
+ Uganda         ,uga,Uganda,190,Uganda
+ Ukraine        ,ukr,Ukraine,63,Ukraine
+ United Arab Emi,are,United Arab Emirates,156,United Arab Emirates
+ United Kingdom ,gbr,United Kingdom,95,United Kingdom
+ United Korea   ,NA,,,
+ Uruguay        ,ury,Uruguay,99,Uruguay
+ USA            ,usa,United States,102,United States of America
+ USSR (Former)  ,ussr,,,
+ Uzbekistan     ,uzb,Uzbekistan,41,Uzbekistan
+ Vanuatu        ,vut,Vanuatu,30,Vanuatu
+ Venezuela      ,ven,Venezuela,133,Venezuela
+ Vietnam        ,vnm,Vietnam,20,Vietnam
+ Wake Island    ,NA,,,
+ Western Sahara ,esh,,,Western Sahara
+ Yemen          ,yem,Yemen,157,Yemen
+ Yemen (Former) ,yem,,,
+ Yugoslavia     ,yug,,,
+ Zambia         ,zmb,Zambia,191,Zambia
+ Zanzibar       ,tza,,,
+ Zimbabwe       ,zwe,Zimbabwe,198,Zimbabwe
