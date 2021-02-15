@@ -13,7 +13,7 @@ SDI_groups <- c("Low SDI", "Low-middle SDI", "Middle SDI", "High-middle SDI", "H
 plot_theme <- theme_bw() + theme(text = element_text(size = 20),
                                  plot.title = element_text(size = 24, margin = margin(0, 0, 10, 0)),
                                  strip.text.x = element_text(size = 16),
-                                 axis.text = element_text(size = 20))
+                                 axis.text = element_text(size = 18))
 
 # Composite PM (open burning average), animated ------------------------------------------------------------------------
 
@@ -76,12 +76,12 @@ for (i in seq_along(health_indicators)) {
                  aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
       #small points for trail
       geom_point(data=filter(GBD_composite_PM_grouped_BioBAvg, measure_name == measure, rei_name == health_indicator, year %in% c(1991:plot_year)),
-                 aes(x=FFI_fraction, y=val, color = `SDI Quintile`), shape = "-", size = 4) +
+                 aes(x=FFI_fraction, y=val, color = `SDI Quintile`), shape = 13, size = 1) +
       # geom_line(data=filter(GBD_composite_PM_grouped_BioBAvg, measure_name == measure, rei_name == health_indicator, year %in% c(1991:plot_year)),
       #            aes(x=FFI_fraction, y=val, color = `SDI Quintile`), linetype = "dashed", size = 1) +
       # open point for 1990
       geom_point(data=filter(GBD_composite_PM_grouped_BioBAvg, measure_name == measure, rei_name == health_indicator, year==1990),
-                 aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, shape = `SDI Quintile`), size = 4) +
+                 aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, shape = `SDI Quintile`), size = 5) +
       labs(x="Fossil Fraction of Composite PM Emissions", 
            y = paste(measure, "from", health_indicator)) +
       scale_y_continuous(limits = c(0, NA),
@@ -93,7 +93,8 @@ for (i in seq_along(health_indicators)) {
                          values = brewer.pal(5, "Set1")) +  
       scale_shape_manual(name = "Socio-Demographic Index",
                          values = c(21, 22, 25, 23, 24)) +
-      plot_theme
+      plot_theme+
+      theme(axis.text = element_text(size=20))
     ggsave(filename=paste0("./figures/", "PM", "_", measure, "_", gsub(" / ", "_", health_indicator), "_still", "_BioBAvg", ".png"), 
            height = 8.5, width = 11, units = "in")
     

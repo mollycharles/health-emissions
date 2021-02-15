@@ -517,7 +517,8 @@ GBD_composite_PM_grouped <- GBD_shares_grouped %>%
           GFED_OC_BioBAvg <- GFED_timeAvg(GFED_OC)
                 
 
-          # PM emissions by species, using smoothed open burning data
+          # Calculate composite PM emissions by species, using smoothed open burning data
+          
           PM_BC_BioBAvg <- bind_rows(PM_emissions(FFI_em(CEDS_BC), PM_CF_BC, "FFI"),
                                     PM_emissions(nonFFI_em(CEDS_BC, GFED_BC_BioBAvg), PM_CF_BC, "non_FFI")) %>%
             dplyr::mutate(species = "BC") %>%
@@ -563,12 +564,13 @@ GBD_composite_PM_grouped <- GBD_shares_grouped %>%
             left_join(cntry_mapping, by = "iso") %>%
             select(c(iso, location_id, year, FFI, non_FFI, total_pm, `SDI Quintile`))
           
+          # Calculate FFI and non-FFI fractions of total PM
           composite_PM_FFI_fraction_BioBAvg <- composite_PM_BioBAvg %>%
             dplyr::mutate(FFI_fraction = FFI / total_pm,
                           non_FFI_fraction = non_FFI / total_pm) %>%
             select(c(iso,  location_id, year, FFI_fraction, non_FFI_fraction, total_pm, `SDI Quintile`))
           
-          
+          # Calculate FFI and non-FFI fractions of total PM for SDI groups
           composite_PM_FFI_fraction_grouped_BioBAvg <- composite_PM_BioBAvg %>%
             group_by_at(vars(year, `SDI Quintile`)) %>%
             dplyr::summarise(FFI = sum(FFI, na.rm=TRUE),
@@ -585,67 +587,70 @@ GBD_composite_PM_grouped <- GBD_shares_grouped %>%
             na.omit() 
           
           GBD_composite_PM_grouped_BioBAvg <- GBD_shares_grouped %>% left_join(composite_PM_FFI_fraction_grouped_BioBAvg, by = c("SDI Quintile", "year")) 
-          
-# get composite PM by emissions species, with open burning (average) emissions separated
+        
+            
+# get composite PM by emissions species, with open burning (smoothed) emissions separated
           
 PM_species <- c("BC", "NH3", "NO2", "SO2", "OC")
           
-          
-PM_CEDS_BC <- CEDS_BC %>%
-  group_by(iso) %>%
-  summarise_at(c(CEDS_years), sum, na.rm = TRUE) %>%
-  gather(CEDS_years, key = "year", value = "value_em") %>%
-  dplyr::mutate(year = as.integer(gsub(".*X","", year))) %>%
-  dplyr::mutate(value_pm = value_em * PM_CF_BC) %>%
-  dplyr::mutate(em_type = "BC")
-          
-PM_CEDS_NH3 <- CEDS_NH3 %>%
-  group_by(iso) %>%
-  summarise_at(c(CEDS_years), sum, na.rm = TRUE) %>%
-  gather(CEDS_years, key = "year", value = "value_em") %>%
-  dplyr::mutate(year = as.integer(gsub(".*X","", year))) %>%
-  dplyr::mutate(value_pm = value_em * PM_CF_NH3) %>%
-  dplyr::mutate(em_type = "NH3")  
+# For each emissions species, sum CEDS sectors and multiply by PM conversion factor for that species
+    PM_CEDS_BC <- CEDS_BC %>%
+      group_by(iso) %>%
+      summarise_at(c(CEDS_years), sum, na.rm = TRUE) %>%
+      gather(CEDS_years, key = "year", value = "value_em") %>%
+      dplyr::mutate(year = as.integer(gsub(".*X","", year))) %>%
+      dplyr::mutate(value_pm = value_em * PM_CF_BC) %>%
+      dplyr::mutate(em_type = "BC")
+              
+    PM_CEDS_NH3 <- CEDS_NH3 %>%
+      group_by(iso) %>%
+      summarise_at(c(CEDS_years), sum, na.rm = TRUE) %>%
+      gather(CEDS_years, key = "year", value = "value_em") %>%
+      dplyr::mutate(year = as.integer(gsub(".*X","", year))) %>%
+      dplyr::mutate(value_pm = value_em * PM_CF_NH3) %>%
+      dplyr::mutate(em_type = "NH3")  
+    
+    PM_CEDS_NO2 <- CEDS_NOx %>%
+      group_by(iso) %>%
+      summarise_at(c(CEDS_years), sum, na.rm = TRUE) %>%
+      gather(CEDS_years, key = "year", value = "value_em") %>%
+      dplyr::mutate(year = as.integer(gsub(".*X","", year))) %>%
+      dplyr::mutate(value_pm = value_em * PM_CF_NO2) %>%
+      dplyr::mutate(em_type = "NO2") 
+    
+    PM_CEDS_SO2 <- CEDS_SO2 %>%
+      group_by(iso) %>%
+      summarise_at(c(CEDS_years), sum, na.rm = TRUE) %>%
+      gather(CEDS_years, key = "year", value = "value_em") %>%
+      dplyr::mutate(year = as.integer(gsub(".*X","", year))) %>%
+      dplyr::mutate(value_pm = value_em * PM_CF_SO2) %>%
+      dplyr::mutate(em_type = "SO2") 
+    
+    PM_CEDS_OC_fossil <- CEDS_OC %>%
+      filter(!fuel == "biomass") %>%
+      group_by(iso) %>%
+      summarise_at(c(CEDS_years), sum, na.rm = TRUE) %>%
+      gather(CEDS_years, key = "year", value = "value_em") %>%
+      dplyr::mutate(year = as.integer(gsub(".*X","", year))) %>%
+      dplyr::mutate(value_pm = value_em * PM_CF_OC_fossil) %>%
+      dplyr::mutate(em_type = "OC") 
+    
+    PM_CEDS_OC_bio <- CEDS_OC %>%
+      filter(fuel == "biomass") %>%
+      group_by(iso) %>%
+      summarise_at(c(CEDS_years), sum, na.rm = TRUE) %>%
+      gather(CEDS_years, key = "year", value = "value_em") %>%
+      dplyr::mutate(year = as.integer(gsub(".*X","", year))) %>%
+      dplyr::mutate(value_pm = value_em * PM_CF_OC_biomass) %>%
+      dplyr::mutate(em_type = "OC") 
 
-PM_CEDS_NO2 <- CEDS_NOx %>%
-  group_by(iso) %>%
-  summarise_at(c(CEDS_years), sum, na.rm = TRUE) %>%
-  gather(CEDS_years, key = "year", value = "value_em") %>%
-  dplyr::mutate(year = as.integer(gsub(".*X","", year))) %>%
-  dplyr::mutate(value_pm = value_em * PM_CF_NO2) %>%
-  dplyr::mutate(em_type = "NO2") 
-
-PM_CEDS_SO2 <- CEDS_SO2 %>%
-  group_by(iso) %>%
-  summarise_at(c(CEDS_years), sum, na.rm = TRUE) %>%
-  gather(CEDS_years, key = "year", value = "value_em") %>%
-  dplyr::mutate(year = as.integer(gsub(".*X","", year))) %>%
-  dplyr::mutate(value_pm = value_em * PM_CF_SO2) %>%
-  dplyr::mutate(em_type = "SO2") 
-
-PM_CEDS_OC_fossil <- CEDS_OC %>%
-  filter(!fuel == "biomass") %>%
-  group_by(iso) %>%
-  summarise_at(c(CEDS_years), sum, na.rm = TRUE) %>%
-  gather(CEDS_years, key = "year", value = "value_em") %>%
-  dplyr::mutate(year = as.integer(gsub(".*X","", year))) %>%
-  dplyr::mutate(value_pm = value_em * PM_CF_OC_fossil) %>%
-  dplyr::mutate(em_type = "OC") 
-
-PM_CEDS_OC_bio <- CEDS_OC %>%
-  filter(fuel == "biomass") %>%
-  group_by(iso) %>%
-  summarise_at(c(CEDS_years), sum, na.rm = TRUE) %>%
-  gather(CEDS_years, key = "year", value = "value_em") %>%
-  dplyr::mutate(year = as.integer(gsub(".*X","", year))) %>%
-  dplyr::mutate(value_pm = value_em * PM_CF_OC_biomass) %>%
-  dplyr::mutate(em_type = "OC") 
-
+# Combine to get composite PM emissions from CEDS
 PM_CEDS_total <- bind_rows(PM_CEDS_BC, PM_CEDS_NH3, PM_CEDS_NO2, PM_CEDS_SO2, PM_CEDS_OC_fossil, PM_CEDS_OC_bio) %>%
   group_by_at(vars(iso, year, em_type)) %>%
   dplyr::summarise(value_pm = sum(value_pm)) %>%
   spread(em_type, value_pm)
           
+# Multiply open burning emissions by PM emissions factors and sum to get open burning composite PM by iso and year
 open_burn_avg_PM_em <- bind_rows(GFED_BC_BioBAvg %>% dplyr::mutate(species = "BC", EF = PM_CF_BC),
                                  GFED_NH3_BioBAvg %>% dplyr::mutate(species = "NH3", EF = PM_CF_NH3),
                                  GFED_NOx_BioBAvg %>% dplyr::mutate(species = "NO2", EF = PM_CF_NO2),
@@ -654,15 +659,17 @@ open_burn_avg_PM_em <- bind_rows(GFED_BC_BioBAvg %>% dplyr::mutate(species = "BC
   gather(-c(iso, species, EF), key = "year", value = "value_timeAvg") %>%
   dplyr::mutate(year = as.integer(gsub(".*X","", year))) %>%
   dplyr::mutate(PM_em = value_timeAvg * EF) %>%
-  group_by(iso) %>%
+  group_by(iso, year) %>%
   dplyr::summarise(open_burn = sum(PM_em, na.rm = TRUE)) 
 
+# Combine CEDS PM emissions by species and open burning total into one data frame
 PM_composition_open_burn_BioBAvg <- PM_CEDS_total %>%
-  left_join(open_burn_avg_PM_em, by = c("iso")) %>%
+  left_join(open_burn_avg_PM_em, by = c("iso", "year")) %>%
   gather(c(BC, NH3, NO2, OC, SO2, open_burn), key = "emissions_type", value = "value")
           
 # Get fossil fraction of emissions by species ------------------------------------------------------------------------------------------
 
+# by iso
 BC_FFI_fraction <- FFI_fraction(CEDS_BC, GFED_BC)
 CH4_FFI_fraction <- FFI_fraction(CEDS_CH4, GFED_CH4) 
 CO_FFI_fraction <- FFI_fraction(CEDS_CO, GFED_CO) 
@@ -673,7 +680,6 @@ OC_FFI_fraction <- FFI_fraction(CEDS_OC, GFED_OC)
 SO2_FFI_fraction <- FFI_fraction(CEDS_SO2, GFED_SO2) 
 
 # Grouped by SDI category
-
 BC_FFI_fraction_grouped <- FFI_fraction_grouped(CEDS_BC, GFED_BC)
 CH4_FFI_fraction_grouped <- FFI_fraction_grouped(CEDS_CH4, GFED_CH4)
 CO_FFI_fraction_grouped <- FFI_fraction_grouped(CEDS_CO, GFED_CO)
@@ -685,6 +691,7 @@ SO2_FFI_fraction_grouped <- FFI_fraction_grouped(CEDS_SO2, GFED_SO2)
 
 # Merge GBD data and fossil fraction of emissions, by emissions species ----------------------------------------------------------------
 
+# by iso
 GBD_BC <- GBD_shares %>% left_join(BC_FFI_fraction, by=c("location_id", "year")) %>% na.omit()
 GBD_CH4 <- GBD_shares %>% left_join(CH4_FFI_fraction, by=c("location_id", "year")) %>% na.omit()
 GBD_CO <- GBD_shares %>% left_join(CO_FFI_fraction, by=c("location_id", "year")) %>% na.omit()
@@ -708,19 +715,23 @@ GBD_SO2_SDI_groups <- GBD_shares_grouped %>% left_join(SO2_FFI_fraction_grouped,
 # Relationship between composite PM emissions and deaths ------------------------------------------------------------
 
 # Merge composite PM emissions, GBD data, and population 
-GBD_population_PM <- GBD_composite_PM %>% left_join(CEDS_pop, by = c("iso", "year")) %>%
+GBD_population_PM <- GBD_composite_PM %>% 
+  left_join(CEDS_pop, by = c("iso", "year")) %>%
   dplyr::mutate(pm_pop = cntry_pm * pop)
-GBD_population_PM_BioBAvg <- GBD_composite_PM_BioBAvg %>% left_join(CEDS_pop, by = c("iso", "year")) %>%
+
+GBD_population_PM_BioBAvg <- GBD_composite_PM_BioBAvg %>% 
+  left_join(CEDS_pop, by = c("iso", "year")) %>%
   dplyr::mutate(pm_pop = total_pm * pop)
 
 
-# get slopes by country to extrapolate deaths in previous years
+# For selected countries, get relationship between share of deaths due to air pollution and composite PM * population
+# Use the slope to extrapolate deaths in previous years
 # use slope in early years for countries where slope changes
 
-extrap_years <- c(1850:1989)
-extrap_isos <- c("chn", "ind", "fra")
+extrap_years <- c(1850:1989) # years to extrapolate deaths for
+extrap_isos <- c("chn", "ind", "fra") # iso codes of countries to look at
 
-actual_years <- c(1990:2017)
+actual_years <- c(1990:2017) # years with actual data
 
 fra_PM_deaths_lm <- lm(formula = val ~ pm_pop, 
                        data=filter(GBD_population_PM, iso == "fra", year <= 2002, 
