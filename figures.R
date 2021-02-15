@@ -13,7 +13,7 @@ SDI_groups <- c("Low SDI", "Low-middle SDI", "Middle SDI", "High-middle SDI", "H
 plot_theme <- theme_bw() + theme(text = element_text(size = 20),
                                  plot.title = element_text(size = 24, margin = margin(0, 0, 10, 0)),
                                  strip.text.x = element_text(size = 16),
-                                 axis.title = element_text(size = 16))
+                                 axis.text = element_text(size = 20))
 
 # Composite PM (open burning average), animated ------------------------------------------------------------------------
 
@@ -31,11 +31,11 @@ for (i in seq_along(health_indicators)) {
     plot <-
       ggplot() +
       geom_point(data=filter(GBD_composite_PM_BioBAvg, location_id %in% c(countries_id), measure_name == measure, rei_name == health_indicator),
-                 aes(x=(non_FFI_fraction), y=val, group = location_name, color = `SDI Quintile`, fill = `SDI Quintile`,  shape = `SDI Quintile`), size = 3) +
+                 aes(x=(FFI_fraction), y=val, group = location_name, color = `SDI Quintile`, fill = `SDI Quintile`,  shape = `SDI Quintile`), size = 3) +
       geom_point(data=filter(GBD_composite_PM_grouped_BioBAvg, measure_name == measure, rei_name == health_indicator),
-                 aes(x=(non_FFI_fraction), y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
+                 aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
       transition_time(as.integer(year)) +
-      labs(title = "Year: {frame_time}", x="Non-Fossil_Industrial Fraction of Composite PM Emissions", 
+      labs(title = "Year: {frame_time}", x="Fossil_Industrial Fraction of Composite PM Emissions", 
            y = paste(measure, "from", health_indicator)) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
@@ -63,26 +63,26 @@ for (i in seq_along(health_indicators)) {
 
     measure <- measures[j]
     
-    plot_year <- 2017
+    plot_year <- 2015
     
     
     plot <-
       ggplot() +
       # individual country points
       geom_point(data=filter(GBD_composite_PM_BioBAvg, location_id %in% c(countries_id), measure_name == measure, rei_name == health_indicator, year == plot_year),
-                 aes(x=(non_FFI_fraction), y=val, group = location_name, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 3) +
+                 aes(x=(FFI_fraction), y=val, group = location_name, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 3) +
       # SDI group averages
       geom_point(data=filter(GBD_composite_PM_grouped_BioBAvg, measure_name == measure, rei_name == health_indicator, year == plot_year),
-                 aes(x=(non_FFI_fraction), y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
+                 aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
       #small points for trail
       geom_point(data=filter(GBD_composite_PM_grouped_BioBAvg, measure_name == measure, rei_name == health_indicator, year %in% c(1991:plot_year)),
-                 aes(x=non_FFI_fraction, y=val, color = `SDI Quintile`), shape = "-", size = 4) +
+                 aes(x=FFI_fraction, y=val, color = `SDI Quintile`), shape = "-", size = 4) +
       # geom_line(data=filter(GBD_composite_PM_grouped_BioBAvg, measure_name == measure, rei_name == health_indicator, year %in% c(1991:plot_year)),
-      #            aes(x=non_FFI_fraction, y=val, color = `SDI Quintile`), linetype = "dashed", size = 1) +
+      #            aes(x=FFI_fraction, y=val, color = `SDI Quintile`), linetype = "dashed", size = 1) +
       # open point for 1990
       geom_point(data=filter(GBD_composite_PM_grouped_BioBAvg, measure_name == measure, rei_name == health_indicator, year==1990),
-                 aes(x=(non_FFI_fraction), y=val, color = `SDI Quintile`, shape = `SDI Quintile`), size = 4) +
-      labs(title = "Composite Particulate Matter", x="Non-Fossil_Industrial Fraction of PM Emissions", 
+                 aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, shape = `SDI Quintile`), size = 4) +
+      labs(x="Fossil Fraction of Composite PM Emissions", 
            y = paste(measure, "from", health_indicator)) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
@@ -118,13 +118,13 @@ for (i in seq_along(health_indicators)) {
     plot <-
       ggplot() +
       geom_point(data=filter(GBD_composite_PM_BioBAvg, location_name %in% plot_countries, measure_name == measure, rei_name == health_indicator, year > 1990),
-                 aes(x=(non_FFI_fraction), y=val, color = location_name, fill = location_name,  shape = location_name), size = 8) +
+                 aes(x=(FFI_fraction), y=val, color = location_name, fill = location_name,  shape = location_name), size = 8) +
       geom_point(data=filter(data_1990, location_name %in% plot_countries, measure_name == measure, rei_name == health_indicator),
-                 aes(x=(1-FFI_fraction), y=val, color = location_name, shape = location_name), size = 3.5) +
+                 aes(x=(FFI_fraction), y=val, color = location_name, shape = location_name), size = 3.5) +
       transition_time(as.integer(year)) +
       #shadow_trail(distance = 1, size = 4) +
       shadow_mark(past = TRUE, future = FALSE, size = 1) +
-      labs(title = "Year: {frame_time}", x="Non-Fossil_Industrial Fraction of Composite PM Emissions", 
+      labs(title = "Year: {frame_time}", x="Fossil Fraction of Composite PM Emissions", 
            y = paste(measure, "from", health_indicator)) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
@@ -160,11 +160,11 @@ for (i in seq_along(health_indicators)) {
     plot <-
       ggplot() +
       geom_point(data=filter(GBD_composite_PM, location_id %in% c(countries_id), year %in% plot_years, measure_name == measure, rei_name == health_indicator),
-                 aes(x=non_FFI_fraction, y=val, group = location_name, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 3) +
+                 aes(x=FFI_fraction, y=val, group = location_name, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 3) +
       geom_point(data=filter(GBD_composite_PM_grouped, year %in% plot_years, measure_name == measure, rei_name == health_indicator),
-                 aes(x=non_FFI_fraction, y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
+                 aes(x=FFI_fraction, y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
       transition_time(as.integer(year)) +
-      labs(title = "Year: {frame_time}", x="Non-Fossil_Industrial Fraction of Composite PM Emissions", 
+      labs(title = "Year: {frame_time}", x="Fossil Fraction of Composite PM Emissions", 
            y = paste(measure, "from", health_indicator)) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
@@ -206,11 +206,11 @@ for (i in seq_along(em_species)) {
   plot <-
     ggplot() +
     geom_point(data=filter(df, location_id %in% c(countries_id), year %in% plot_years, measure_name == measure, rei_name == health_indicator),
-               aes(x=(1-FFI_fraction), y=val, group = location_name, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 3) +
+               aes(x=(FFI_fraction), y=val, group = location_name, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 3) +
     geom_point(data=filter(df_grouped, year %in% plot_years, measure_name == measure, rei_name == health_indicator),
-               aes(x=(1-FFI_fraction), y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
+               aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
     transition_time(as.integer(year)) +
-    labs(title = paste(em_species[i]), subtitle = "Year: {frame_time}", x="Fraction Non-Fossil_Industrial Emissions", 
+    labs(title = paste(em_species[i]), subtitle = "Year: {frame_time}", x="Fossil Fraction of Emissions", 
          y = paste(measure, "from", health_indicator)) +
     scale_y_continuous(limits = c(0, NA),
                        labels = scales::percent_format(accuracy = 1L)) +
@@ -252,14 +252,14 @@ for (i in seq_along(em_species)) {
   plot <-
     ggplot() +
     geom_point(data=filter(df, location_id %in% c(countries_id), measure_name == measure, rei_name == health_indicator, year == plot_year),
-               aes(x=(1-FFI_fraction), y=val, group = location_name, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 3) +
+               aes(x=(FFI_fraction), y=val, group = location_name, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 3) +
     geom_point(data=filter(df_grouped, measure_name == measure, rei_name == health_indicator, year == plot_year),
-               aes(x=(1-FFI_fraction), y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
+               aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
     geom_point(data=filter(df_grouped, measure_name == measure, rei_name == health_indicator, year %in% c(1990:plot_year)),
-               aes(x=(1-FFI_fraction), y=val, color = `SDI Quintile`, fill = `SDI Quintile`), size = 4, shape = "-") +
+               aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, fill = `SDI Quintile`), size = 4, shape = "-") +
     # geom_text(data=filter(df_grouped, measure_name == measure, rei_name == health_indicator, year %in% c(1990:plot_year)), 
-    #            mapping = aes(x=(1-FFI_fraction), y=val, label = year), stat = "identity") +
-    labs(title = paste(em_species[i]), subtitle = plot_year, x="Fraction Non-Fossil_Industrial Emissions", 
+    #            mapping = aes(x=(FFI_fraction), y=val, label = year), stat = "identity") +
+    labs(title = paste(em_species[i]), subtitle = plot_year, x="Fossil Fraction of Emissions", 
          y = paste(measure, "from", health_indicator)) +
     scale_y_continuous(limits = c(0, NA),
                        labels = scales::percent_format(accuracy = 1L)) +
@@ -442,10 +442,10 @@ ggplot(data=filter(PM_composition_open_burn_BioBAvg,
 p <-
   ggplot() +
   geom_point(data=filter(PM_deaths_frac_cntry_allyears_extrap, year %in% c(1850:2015)),
-             aes(x=(non_FFI / total_pm), y=val, color = iso, fill = iso,  shape = iso), size = 8) +
+             aes(x=(FFI / total_pm), y=val, color = iso, fill = iso,  shape = iso), size = 8) +
   shadow_mark(past = TRUE, future = FALSE, size = 1) +
   transition_time(as.integer(year)) +
-  labs(title = "Year: {frame_time}", x="Non-Fossil_Industrial Fraction of Composite PM Emissions", 
+  labs(title = "Year: {frame_time}", x="Fossil_Industrial Fraction of Composite PM Emissions", 
        y = "Fraction of Deaths from Ambient PM Pollution") +
   scale_y_continuous(limits = c(0, NA),
                      labels = scales::percent_format(accuracy = 1L)) +

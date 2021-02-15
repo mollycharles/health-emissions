@@ -1,28 +1,29 @@
 library(tidyverse)
 library(plyr)
 library(dplyr)
+library(zoo)
 
 options(scipen = 999)
 
 # Read in data -------------------------------------------------------------------------------------
 
-# Global burden of disease
+# Global burden of disease data
 GBD <- readr::read_csv("./data/IHME-GBD_2017_DATA-3ca98db6-1.csv") 
 
-# CEDS
-CEDS_BC <- readr::read_csv("./data/CEDS-master_branch-Fin_Em(2.4.20)/BC_total_CEDS_emissions.csv")
-CEDS_CH4 <- readr::read_csv("./data/CEDS-master_branch-Fin_Em(2.4.20)/CH4_total_CEDS_emissions.csv")
-CEDS_CO <- readr::read_csv("./data/CEDS-master_branch-Fin_Em(2.4.20)/CO_total_CEDS_emissions.csv")
-CEDS_CO2 <- readr::read_csv("./data/CEDS-master_branch-Fin_Em(2.4.20)/CO2_total_CEDS_emissions.csv")
-CEDS_NH3 <- readr::read_csv("./data/CEDS-master_branch-Fin_Em(2.4.20)/NH3_total_CEDS_emissions.csv")
-CEDS_NMVOC <- readr::read_csv("./data/CEDS-master_branch-Fin_Em(2.4.20)/NMVOC_total_CEDS_emissions.csv")
-CEDS_NOx <- readr::read_csv("./data/CEDS-master_branch-Fin_Em(2.4.20)/NOx_total_CEDS_emissions.csv")
-CEDS_OC <- readr::read_csv("./data/CEDS-master_branch-Fin_Em(2.4.20)/OC_total_CEDS_emissions.csv")
-CEDS_SO2 <- readr::read_csv("./data/CEDS-master_branch-Fin_Em(2.4.20)/SO2_total_CEDS_emissions.csv")
+# CEDS data by species
+CEDS_BC <- readr::read_csv("./data/CEDS(2.10.21)/BC_total_CEDS_emissions.csv")
+CEDS_CH4 <- readr::read_csv("./data/CEDS(2.10.21)/CH4_total_CEDS_emissions.csv")
+CEDS_CO <- readr::read_csv("./data/CEDS(2.10.21)/CO_total_CEDS_emissions.csv")
+CEDS_CO2 <- readr::read_csv("./data/CEDS(2.10.21)/CO2_total_CEDS_emissions.csv")
+CEDS_NH3 <- readr::read_csv("./data/CEDS(2.10.21)/NH3_total_CEDS_emissions.csv")
+CEDS_NMVOC <- readr::read_csv("./data/CEDS(2.10.21)/NMVOC_total_CEDS_emissions.csv")
+CEDS_NOx <- readr::read_csv("./data/CEDS(2.10.21)/NOx_total_CEDS_emissions.csv")
+CEDS_OC <- readr::read_csv("./data/CEDS(2.10.21)/OC_total_CEDS_emissions.csv")
+CEDS_SO2 <- readr::read_csv("./data/CEDS(2.10.21)/SO2_total_CEDS_emissions.csv")
 
 CEDS_pop <- readr::read_csv("./data/A.UN_pop_master.csv")
 
-# Open burning (GFED)
+# Open burning emissions (GFED)
 GFED_BC <- bind_rows(readr::read_csv("./data/1750-2015_v1.2_Emissions_bulk_em/BC_LUC_AGRI.csv"),
                      readr::read_csv("./data/1750-2015_v1.2_Emissions_bulk_em/BC_LUC_BORF.csv"),
                      readr::read_csv("./data/1750-2015_v1.2_Emissions_bulk_em/BC_LUC_DEFO.csv"),
@@ -85,6 +86,8 @@ GFED_SO2 <- bind_rows(readr::read_csv("./data/1750-2015_v1.2_Emissions_bulk_em/S
 sdi_groups <- readr::read_csv("./data/IHME_GBD_2017_SDI_2017_QUINTILES_Y2018M11D08.CSV") 
 cntry_groups <- readxl::read_xlsx("./data/IHME_GBD_2017_CODEBOOK/IHME_GBD_2017_ALL_LOCATIONS_HIERARCHIES_Y2018M11D18.XLSX")
 
+# get location IDs for countries within each World Bank income group, G20, and OECD
+
 WB_high_income <- cntry_groups %>% filter(parent_id == 44575) %>%
   select(c(location_id)) %>% dplyr::mutate(WB_inc_group = "high")
 
@@ -107,7 +110,7 @@ OECD <- cntry_groups %>% filter(parent_id == 44584) %>%
   select(c(location_id, location_name)) 
 
 
-# match country name, iso, ID, categories
+# match country name, iso,location ID, and country categories
 cntry_mapping <- readr::read_csv("./data/cntry_mapping.csv") %>%
   left_join(sdi_groups, by = c("location_id" = "Location ID")) %>%
   select(-c(`2017 SDI Index Value`, `Location Name`)) %>%
@@ -115,20 +118,23 @@ cntry_mapping <- readr::read_csv("./data/cntry_mapping.csv") %>%
 
 
 # CO2 emissions by country (from Global Carbon atlas; using 2016 data as 2017 and 2018 are estimates)
-# get top co2 emitting countries. Add top 10 from each SDI group if not included, so all are represented
+# get top 50 highest co2 emitting countries. Add top 10 from each SDI group if not included, so all groups are represented
 n_countries <- 50 
 n_countries_SDI_group <- 10 
 
-natl_co2_em_top <- readxl::read_xlsx("./data/natl_co2_em_2016_GC.xlsx", sheet="Data", skip = 1) %>%
+# read in Global Carbon Atlas data by country and reshape
+GCA_2016 <- readxl::read_xlsx("./data/natl_co2_em_2016_GC.xlsx", sheet="Data", skip = 1) %>%
   gather(-`...1`, key="country", value = "MTCO2") %>%
+  dplyr::rename(year = `...1`) 
+
+natl_co2_em_top <- GCA_2016 %>%
   left_join(cntry_mapping, by = c("country" = "Country_GCA")) %>%
   select(c(country, MTCO2, iso, location_id, `SDI Quintile`)) %>%
   na.omit() %>%
   arrange(desc(MTCO2)) %>% 
   top_n(n_countries, wt = MTCO2)
 
-natl_co2_em_SDI_groups <- readxl::read_xlsx("./data/natl_co2_em_2016_GC.xlsx", sheet="Data", skip = 1) %>%
-  gather(-`...1`, key="country", value = "MTCO2") %>%
+natl_co2_em_SDI_groups <- GCA_2016 %>%
   left_join(cntry_mapping, by = c("country" = "Country_GCA")) %>%
   select(c(country, MTCO2, iso, location_id, `SDI Quintile`)) %>%
   na.omit() %>%
@@ -138,12 +144,13 @@ natl_co2_em_SDI_groups <- readxl::read_xlsx("./data/natl_co2_em_2016_GC.xlsx", s
 
 natl_co2_em <- bind_rows(natl_co2_em_top, natl_co2_em_SDI_groups)
 
+# Get iso codes of top emitting countries (overall and by iso group)
 countries_iso <- unique(natl_co2_em$iso)
 countries_id <- unique(natl_co2_em$location_id)
 
 # --------------------------------------------------------------------------------------------------
 
-CEDS_years <- paste0("X", 1750:2018)
+CEDS_years <- paste0("X", 1750:2019)
 CEDS_years_noX <- gsub(".*X", "", CEDS_years)
 
 GBD_years <- paste0("X", 1990:2017)
@@ -155,10 +162,12 @@ GFED_years_noX <- gsub(".*X", "", GFED_years)
 
 # Shares of GBD causes of death/disease  ----------------------------------------------------------------
 
+# calculate shares of deaths/DALYs due to various causes
+
 GBD_shares <- GBD %>%
   # remove unecessary variables (same across all observations)
   select(-c(sex_id, sex_name, age_id, age_name, cause_id, cause_name, metric_id, metric_name)) %>%
-  # remove upper and lower for now 
+  # remove upper and lower range (not using this for now)
   select(-c(upper, lower, rei_id)) %>%
   spread(rei_name, val) %>%
   dplyr::mutate(`Air pollution / Environmental/occupational risks` = `Air pollution` / `Environmental/occupational risks`,
@@ -168,10 +177,13 @@ GBD_shares <- GBD %>%
   dplyr::mutate(measure_name = if_else(measure_id == 2, "DALYs", measure_name)) %>%
   gather(-c(measure_id, measure_name, location_id, location_name, year), key = "rei_name", value = "val")
 
+
+# same calculation as above, but group countries by SDI quintile
+
 GBD_shares_grouped <- GBD %>%
   # remove unecessary variables (same across all observations)
   select(-c(sex_id, sex_name, age_id, age_name, cause_id, cause_name, metric_id, metric_name)) %>%
-  # remove upper and lower for now 
+  # remove upper and lower range (not using this for now)
   select(-c(upper, lower, rei_id)) %>%
   left_join(cntry_mapping, by = c("location_id")) %>% 
   na.omit() %>%
@@ -187,16 +199,35 @@ GBD_shares_grouped <- GBD %>%
   gather(-c(measure_id, measure_name, `SDI Quintile`, year), key = "rei_name", value = "val")
 
 
-# Process CEDS and open burning data - FFI emissions and share of total ----------------------------------------------
+# Process CEDS and open burning data - fossil/industrial emissions and share of total ----------------------------------------------
 
+
+# Non-fossil/industrial emissions are defined as the sum of:
+# - All solid biomass CEDS emissions across all sectors
+# - 5C_Waste-incineration (CEDS)
+# - All open burning emissions (forest fires, grassland files, ag waste burning on fields).
+
+# Fossil/industrial emissions are the CEDS totals minus the two CEDS categories above.
+
+## Functions for calculating total, FFI, and non-FFI emissions -------
+
+# calculate total 
 total_em <- function(CEDS_in, GFED_in) {
+  
+  # Combine CEDS and GFED data
   df_out <- bind_rows(CEDS_in, GFED_in) %>%
+    
+    # Compute total emissions by year and country
     group_by(iso) %>%
     summarise_at(c(CEDS_years), sum, na.rm = TRUE) %>%
+    
+    # select years of interest
     select(iso, CEDS_years)
 }
 
+# Calculate FFI emissions 
 FFI_em <- function(CEDS_in) {
+  
   df_out <- CEDS_in %>%
     
     # Filter out non-fossil/industrial
@@ -206,14 +237,16 @@ FFI_em <- function(CEDS_in) {
     group_by(iso) %>%
     summarise_at(c(CEDS_years), sum, na.rm = TRUE) %>%
     
-    # filter for years of interest
+    # select years of interest
     select(iso, CEDS_years)
 }
 
+# Calculate non-FFI emissions
 nonFFI_em <- function(CEDS_in, GFED_in) {
+  
   df_out <- CEDS_in %>%
     
-    # Filter for non-fossil/industrial
+    # Filter for non-FFI
     filter(fuel == "biomass" | sector == "5C_Waste-incineration") %>%
     
     # need to add CEDS non FFI and open burning to get non-fossil
@@ -227,6 +260,8 @@ nonFFI_em <- function(CEDS_in, GFED_in) {
     select(iso, CEDS_years)
 }
 
+
+# Calculate fraction of FFI in total emissions 
 
 FFI_fraction <- function(CEDS_in, GFED_in) {
   
@@ -249,14 +284,19 @@ FFI_fraction <- function(CEDS_in, GFED_in) {
 }
 
 
-# Grouped by SDI quintile
-
+# Same functions as above, but grouped by SDI quintile instead of country
 
 total_em_grouped <- function(CEDS_in, GFED_in) {
+  
+    # Combine CEDS and GFED data
     df <- bind_rows(CEDS_in, GFED_in) %>%
       left_join(cntry_mapping, by = "iso") %>%
+      
+      # Compute total emissions by year and SDI quintile
       group_by(`SDI Quintile`) %>%
       summarise_at(c(CEDS_years), sum, na.rm = TRUE) %>%
+      
+      # Select years of interest
       select(`SDI Quintile`, GBD_years) %>%
       na.omit()
 }
@@ -324,6 +364,10 @@ FFI_fraction_grouped <- function(CEDS_in, GFED_in) {
 # Get composite PM emissions -----------------------------------------------------------------------------------------------------------
 
 # Conversion factors
+# These conversion factors represent the global average of:  mass of particulate matter / mass of emission. 
+# For OC this represents unit conversion from carbon units to total mass.
+# For other reactive species this represents the ultimate outcome of chemical reactions.
+
 PM_CF_BC <-	1
 PM_CF_NH3	<- 0.5
 PM_CF_NO2 <-	0.61
@@ -332,15 +376,24 @@ PM_CF_OC_biomass <-	1.8
 PM_CF_OC_fossil	<- 1.3
 
 
+# Function to calculate composite PM emissions
+
 PM_emissions <- function(emissions_df, PM_conversion_factor, em_type) {
+  
   df_out <- emissions_df %>% 
+    
+    # gather years
     gather(CEDS_years, key = "year", value = "value_em") %>%
     dplyr::mutate(year = as.integer(gsub(".*X","", year))) %>%
+    
+    # Multiply emissions by PM conversion factor
     dplyr::mutate(value_pm = value_em * PM_conversion_factor) %>%
+    
+    # Add marker for FFI or non-FFI
     dplyr::mutate(em_type = em_type)
 }
 
-# Multiply by conversion factor by species and emissions type
+# Convert to composite PM emissions for each species and emissions type
 
 PM_BC <- bind_rows(PM_emissions(FFI_em(CEDS_BC), PM_CF_BC, "FFI"),
                    PM_emissions(nonFFI_em(CEDS_BC, GFED_BC), PM_CF_BC, "non_FFI")) %>%
@@ -372,13 +425,14 @@ PM_OC <- bind_rows(PM_emissions(FFI_em(CEDS_OC), PM_CF_OC_fossil, "FFI"),
   select(-value_em) %>%
   spread(em_type, value_pm)
 
+# combine composite PM by species into one dataframe
 PM_composition <- bind_rows(PM_BC, PM_NH3, PM_NOx, PM_SO2, PM_OC)  %>%
   dplyr::mutate(total_pm = FFI + non_FFI) %>% 
   left_join(cntry_mapping, by = "iso") %>%
   select(c(iso, location_id, year, species, FFI, non_FFI, total_pm, `SDI Quintile`)) %>%
   na.omit()
   
-# Add to get composite PM
+# Sum species to get total, FFI, and non-FFI composite PM 
 composite_PM <- bind_rows(PM_BC, PM_NH3, PM_NOx, PM_SO2, PM_OC) %>%
   group_by_at(vars(iso, year)) %>%
   dplyr::summarise(FFI = sum(FFI, na.rm=TRUE),
@@ -387,12 +441,14 @@ composite_PM <- bind_rows(PM_BC, PM_NH3, PM_NOx, PM_SO2, PM_OC) %>%
   left_join(cntry_mapping, by = "iso") %>%
   select(c(iso, location_id, year, FFI, non_FFI, total_pm, `SDI Quintile`))
 
+# Calculate fraction of FFI and non-FFI PM 
+# by country
 composite_PM_FFI_fraction <- composite_PM %>%
   dplyr::mutate(FFI_fraction = FFI / total_pm,
                 non_FFI_fraction = non_FFI / total_pm) %>%
   select(c(iso,  location_id, year, FFI_fraction, non_FFI_fraction, `SDI Quintile`))
 
-
+#  by SDI group
 composite_PM_FFI_fraction_grouped <- composite_PM %>%
   group_by_at(vars(year, `SDI Quintile`)) %>%
   dplyr::summarise(FFI = sum(FFI, na.rm=TRUE),
@@ -402,7 +458,7 @@ composite_PM_FFI_fraction_grouped <- composite_PM %>%
                 non_FFI_fraction = non_FFI / total_pm) %>%
   na.omit()
 
-# Check country shares of PM emissions by SDI category
+# Check country shares of PM emissions in each SDI category
 cntry_PM_shares <- composite_PM %>%
   dplyr::rename(cntry_pm = total_pm) %>%
   left_join(composite_PM_FFI_fraction_grouped, by = c("year", "SDI Quintile")) %>%
@@ -410,67 +466,84 @@ cntry_PM_shares <- composite_PM %>%
   na.omit() %>%
   dplyr::mutate(cntry_share_PM = cntry_pm / total_pm) 
 
+
 # Combine with global burden of disease data
 GBD_composite_PM <- GBD_shares %>% 
   left_join(composite_PM_FFI_fraction, by = c("location_id", "year")) %>% 
   na.omit() %>%
   left_join(select(cntry_PM_shares, -c(total_pm)), by = c("iso", "location_id", "year", "SDI Quintile"))
 
-GBD_composite_PM_grouped <- GBD_shares_grouped %>% left_join(composite_PM_FFI_fraction_grouped, by = c("SDI Quintile", "year")) 
+GBD_composite_PM_grouped <- GBD_shares_grouped %>% 
+  left_join(composite_PM_FFI_fraction_grouped, by = c("SDI Quintile", "year")) 
 
 
 
-          # Get composite PM using open burning time average ---------------------------------------
+      # Get composite PM using open burning time average ---------------------------------------
 
-                GFED_timeAvg <- function(GFED_in) { 
-                  df_out <- GFED_in %>%
-                    select(iso, sector, GFED_years) %>%
-                    gather(GFED_years, key="year", value="value") %>%
-                    group_by(iso) %>%
-                    dplyr::summarise(value_timeAvg = mean(value, na.rm=TRUE))
-                }
-
+          # Function to smooth open burning data
+            GFED_timeAvg <- function(GFED_in) { 
+              df_out <- GFED_in %>%
                 
-                nonFFI_em_BioBAvg <- function(CEDS_in, GFED_in_timeAvg) {
-                  df_out <- CEDS_in %>%
-                    filter(fuel == "biomass" | sector == "5C_Waste-incineration") %>%
-                    group_by(iso) %>%
-                    summarise_at(c(CEDS_years), sum, na.rm = TRUE) %>% 
-                    select(iso, CEDS_years) %>%
-                    gather(GBD_years, key="year", value = "value") %>%
-                    left_join(GFED_in_timeAvg, by="iso") %>%
-                    dplyr::mutate(value = value + value_timeAvg) %>%
-                    select(-value_timeAvg) %>%
-                    spread(year, value)
-                }
+                # Gather years
+                select(iso, sector, GFED_years) %>%
+                gather(GFED_years, key="year", value="value") %>%
+                dplyr::mutate(year = as.integer(gsub("X", "", year))) %>%
+                
+                #sum sectors to get total open burning emissions by country and year
+                group_by(iso, year) %>%
+                dplyr::summarise(value = sum(value)) %>%
+                ungroup() %>%
+                
+                # Compute 10-year rolling average of open burning emissions 
+                group_by(iso) %>%
+                dplyr::mutate(value_10ya = zoo::rollmean(value, k = 10, fill = "extend")) %>%
+                
+                # add X back to year and reshape to match original
+                dplyr::mutate(year = paste0("X", year)) %>%
+                select(-value) %>%
+                spread(year, value_10ya) %>%
+              
+                # extend 2015 data out to 2017
+                dplyr::mutate(X2016 = X2015, X2017 = X2015)
+              
+            }
 
-          # PM emissions by species
+
+          # Get rolling average for each species
+          GFED_BC_BioBAvg <- GFED_timeAvg(GFED_BC)
+          GFED_NH3_BioBAvg <- GFED_timeAvg(GFED_NH3)
+          GFED_NOx_BioBAvg <- GFED_timeAvg(GFED_NOx)
+          GFED_SO2_BioBAvg <- GFED_timeAvg(GFED_SO2)
+          GFED_OC_BioBAvg <- GFED_timeAvg(GFED_OC)
+                
+
+          # PM emissions by species, using smoothed open burning data
           PM_BC_BioBAvg <- bind_rows(PM_emissions(FFI_em(CEDS_BC), PM_CF_BC, "FFI"),
-                                    PM_emissions(nonFFI_em_BioBAvg(CEDS_BC, GFED_timeAvg(GFED_BC)), PM_CF_BC, "non_FFI")) %>%
+                                    PM_emissions(nonFFI_em(CEDS_BC, GFED_BC_BioBAvg), PM_CF_BC, "non_FFI")) %>%
             dplyr::mutate(species = "BC") %>%
             select(-value_em) %>%
             spread(em_type, value_pm)
           
           PM_NH3_BioBAvg <- bind_rows(PM_emissions(FFI_em(CEDS_NH3), PM_CF_NH3, "FFI"),
-                                      PM_emissions(nonFFI_em_BioBAvg(CEDS_NH3, GFED_timeAvg(GFED_NH3)), PM_CF_NH3, "non_FFI")) %>%
+                                      PM_emissions(nonFFI_em(CEDS_NH3, GFED_NH3_BioBAvg), PM_CF_NH3, "non_FFI")) %>%
             dplyr::mutate(species = "NH3") %>%
             select(-value_em) %>%
             spread(em_type, value_pm)
           
           PM_NOx_BioBAvg <- bind_rows(PM_emissions(FFI_em(CEDS_NOx), PM_CF_NO2, "FFI"),
-                                      PM_emissions(nonFFI_em_BioBAvg(CEDS_NOx, GFED_timeAvg(GFED_NOx)), PM_CF_NO2, "non_FFI")) %>%
+                                      PM_emissions(nonFFI_em(CEDS_NOx, GFED_NOx_BioBAvg), PM_CF_NO2, "non_FFI")) %>%
             dplyr::mutate(species = "NOx") %>%
             select(-value_em) %>%
             spread(em_type, value_pm)
           
           PM_SO2_BioBAvg <- bind_rows(PM_emissions(FFI_em(CEDS_SO2), PM_CF_SO2, "FFI"),
-                                      PM_emissions(nonFFI_em_BioBAvg(CEDS_SO2, GFED_timeAvg(GFED_SO2)), PM_CF_SO2, "non_FFI")) %>%
+                                      PM_emissions(nonFFI_em(CEDS_SO2, GFED_SO2_BioBAvg), PM_CF_SO2, "non_FFI")) %>%
             dplyr::mutate(species = "SO2") %>%
             select(-value_em) %>%
             spread(em_type, value_pm)
           
           PM_OC_BioBAvg <- bind_rows(PM_emissions(FFI_em(CEDS_OC), PM_CF_OC_fossil, "FFI"),
-                                     PM_emissions(nonFFI_em_BioBAvg(CEDS_OC, GFED_timeAvg(GFED_OC)), PM_CF_OC_biomass, "non_FFI")) %>%
+                                     PM_emissions(nonFFI_em(CEDS_OC, GFED_OC_BioBAvg), PM_CF_OC_biomass, "non_FFI")) %>%
             dplyr::mutate(species = "OC") %>%
             select(-value_em) %>%
             spread(em_type, value_pm)
@@ -573,11 +646,13 @@ PM_CEDS_total <- bind_rows(PM_CEDS_BC, PM_CEDS_NH3, PM_CEDS_NO2, PM_CEDS_SO2, PM
   dplyr::summarise(value_pm = sum(value_pm)) %>%
   spread(em_type, value_pm)
           
-open_burn_avg_PM_em <- bind_rows(GFED_timeAvg(GFED_BC) %>% dplyr::mutate(species = "BC", EF = PM_CF_BC),
-                                 GFED_timeAvg(GFED_NH3) %>% dplyr::mutate(species = "NH3", EF = PM_CF_NH3),
-                                 GFED_timeAvg(GFED_NOx) %>% dplyr::mutate(species = "NO2", EF = PM_CF_NO2),
-                                 GFED_timeAvg(GFED_SO2) %>% dplyr::mutate(species = "SO2", EF = PM_CF_SO2),
-                                 GFED_timeAvg(GFED_OC) %>% dplyr::mutate(species = "OC", EF = PM_CF_OC_biomass)) %>%
+open_burn_avg_PM_em <- bind_rows(GFED_BC_BioBAvg %>% dplyr::mutate(species = "BC", EF = PM_CF_BC),
+                                 GFED_NH3_BioBAvg %>% dplyr::mutate(species = "NH3", EF = PM_CF_NH3),
+                                 GFED_NOx_BioBAvg %>% dplyr::mutate(species = "NO2", EF = PM_CF_NO2),
+                                 GFED_SO2_BioBAvg %>% dplyr::mutate(species = "SO2", EF = PM_CF_SO2),
+                                 GFED_OC_BioBAvg %>% dplyr::mutate(species = "OC", EF = PM_CF_OC_biomass)) %>%
+  gather(-c(iso, species, EF), key = "year", value = "value_timeAvg") %>%
+  dplyr::mutate(year = as.integer(gsub(".*X","", year))) %>%
   dplyr::mutate(PM_em = value_timeAvg * EF) %>%
   group_by(iso) %>%
   dplyr::summarise(open_burn = sum(PM_em, na.rm = TRUE)) 
