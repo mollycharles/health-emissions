@@ -4,4 +4,4 @@
 .Ruserdata
 
 # Proprietary files
-CEDS_*
+*_CEDS_emissions.csv
