@@ -1,0 +1,13 @@
+This folder should contain the following files:
+
+SO2_total_CEDS_emissions.csv
+OC_total_CEDS_emissions.csv
+NOx_total_CEDS_emissions.csv
+NMVOC_total_CEDS_emissions.csv
+NH3_total_CEDS_emissions.csv
+CO_total_CEDS_emissions.csv
+CO2_total_CEDS_emissions.csv
+CH4_total_CEDS_emissions.csv
+BC_total_CEDS_emissions.csv
+
+from the latest CEDS version.
