@@ -54,16 +54,18 @@ for (i in seq_along(health_indicators)) {
 }
 
 # Composite PM (open burning average), still with trajectory lines -----------------------------------------------------------------
+# this is the main plot
 
 for (i in seq_along(health_indicators)) {
   
   health_indicator <- health_indicators[i]
+  health_indicator_label <- if_else(health_indicator == "Air pollution / All risk factors", "Air pollution", "Environ-Occup")
   
   for (j in seq_along(measures)) {
 
     measure <- measures[j]
     
-    plot_year <- 2015
+    plot_year <- 2017
     
     
     plot <-
@@ -83,10 +85,10 @@ for (i in seq_along(health_indicators)) {
       geom_point(data=filter(GBD_composite_PM_grouped_BioBAvg, measure_name == measure, rei_name == health_indicator, year==1990),
                  aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, shape = `SDI Quintile`), size = 5) +
       labs(x="Fossil Fraction of Composite PM Emissions", 
-           y = paste(measure, "from", health_indicator)) +
+           y = paste(measure, "from", health_indicator_label)) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
-      scale_x_continuous(labels = scales::percent_format(accuracy = 1L)) +
+      scale_x_reverse(labels = scales::percent_format(accuracy = 1L)) +
       scale_color_manual(name = "Socio-Demographic Index",
                          values = brewer.pal(5, "Set1")) +   
       scale_fill_manual(name = "Socio-Demographic Index",
