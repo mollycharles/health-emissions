@@ -10,7 +10,7 @@ create_y_label <- function( health_indicator, measure ) {
   return( y_label )
 }
 
-DO_ANNIMATION <- TRUE
+DO_ANNIMATION <- FALSE
 
 em_species <- c("BC", "CH4", "CO", "NH3", "NMVOC", "NOx", "OC", "SO2")
 
