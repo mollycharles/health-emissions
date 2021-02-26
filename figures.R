@@ -5,7 +5,7 @@ library(RColorBrewer)
 
 # ------- Helper function
 create_y_label <- function( health_indicator, measure ) {
-  health_indicator_label <- if_else(health_indicator == "Air pollution / All_Cause", "Air pollution", "Environ-Occup")
+  health_indicator_label <- if_else(health_indicator == "Air pollution / All_Cause", "Air Pollution", "Environ-Occup")
   y_label <- paste(measure, "From", health_indicator_label)
   return( y_label )
 }
