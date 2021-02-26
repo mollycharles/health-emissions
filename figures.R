@@ -3,11 +3,18 @@ source("./data_processing.R")
 library(gganimate)
 library(RColorBrewer)
 
-DO_ANNIMATION <- FALSE
+# ------- Helper function
+create_y_label <- function( health_indicator, measure ) {
+  health_indicator_label <- if_else(health_indicator == "Air pollution / All_Cause", "Air pollution", "Environ-Occup")
+  y_label <- paste(measure, "From", health_indicator_label)
+  return( y_label )
+}
+
+DO_ANNIMATION <- TRUE
 
 em_species <- c("BC", "CH4", "CO", "NH3", "NMVOC", "NOx", "OC", "SO2")
 
-health_indicators <- c("Air pollution / All risk factors", "Environ-Occup / All risk factors")
+health_indicators <- c("Air pollution / All_Cause", "Environ-Occup / All_Cause")
 measures <- c("Deaths", "DALYs")
 
 SDI_groups <- c("Low SDI", "Low-middle SDI", "Middle SDI", "High-middle SDI", "High SDI")
@@ -38,7 +45,7 @@ for (i in seq_along(health_indicators)) {
                  aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
       transition_time(as.integer(year)) +
       labs(title = "Year: {frame_time}", x="Fossil_Industrial Fraction of PM-Equivalant Emissions", 
-           y = paste(measure, "from", health_indicator)) +
+           y = create_y_label( health_indicator, measure ) ) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
       scale_x_continuous(labels = scales::percent_format(accuracy = 1L)) +
@@ -62,13 +69,12 @@ for (i in seq_along(health_indicators)) {
 for (i in seq_along(health_indicators)) {
   
   health_indicator <- health_indicators[i]
-  health_indicator_label <- if_else(health_indicator == "Air pollution / All risk factors", "Air pollution", "Environ-Occup")
-  
+
   for (j in seq_along(measures)) {
 
     measure <- measures[j]
     
-    plot_year <- 2017
+    plot_year <- 2019
     
     plot <-
       ggplot() +
@@ -87,7 +93,7 @@ for (i in seq_along(health_indicators)) {
       geom_point(data=filter(GBD_composite_PM_grouped_BioBAvg, measure_name == measure, rei_name == health_indicator, year==1990),
                  aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, shape = `SDI Quintile`), size = 4) +
       labs(x="Fossil Fraction of PM-Equivalant Emissions", 
-           y = paste(measure, "from", health_indicator_label)) +
+           y = create_y_label( health_indicator, measure ) ) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
       scale_x_reverse(limits = c(1, 0), labels = scales::percent_format(accuracy = 1L)) +
@@ -175,7 +181,7 @@ for (i in seq_along(health_indicators)) {
     
     measure <- measures[j]
     
-    plot_years <- c(1990:2015)
+    plot_years <- c(1990:2015) # yearly open burning data only goes to 2015
     
     plot <-
       ggplot() +
@@ -215,7 +221,7 @@ for (i in seq_along(em_species)) {
       measure <- "DALYs"
       
       # select risk variable
-      health_indicator <- "Air pollution / All risk factors"
+      health_indicator <- "Air pollution / All_Cause"
 
   
   df <- get(paste0("GBD_", em_species[i]))
@@ -258,7 +264,7 @@ for (i in seq_along(em_species)) {
       measure <- "DALYs"
       
       # select risk variable
-      health_indicator <- "Air pollution / All risk factors"
+      health_indicator <- "Air pollution / All_Cause"
       
       # select year
       plot_year <- 2015
@@ -336,17 +342,17 @@ ggplot(data=filter(GBD_population_PM,
 
 #fraction of all deaths from ambient PM pollution
 ggplot(data=filter(GBD_population_PM, iso %in% c("chn", "usa", "ind", "idn", "cod", "fra", "deu", "pol", "gbr"),
-                   rei_name == "Ambient PM pollution / All risk factors",
+                   rei_name == "Ambient PM pollution / All_Cause",
                    measure_name == "Deaths"),
        aes(x = pm_pop/1000000, y = val, color = year)) +
   geom_point(size = 5) +
   geom_text(data=filter(GBD_population_PM, iso %in% c("chn", "usa", "ind", "idn", "cod", "fra", "deu", "pol", "gbr"),
-                        rei_name == "Ambient PM pollution / All risk factors",
+                        rei_name == "Ambient PM pollution / All_Cause",
                         measure_name == "Deaths",
                         inflection_point == TRUE),
             aes(label = year), size = 3, hjust=1.25, vjust=-0.5, color = "black") +
   facet_wrap(~location_name, scales = "free") +
-  labs(x="PM-Equivalant * population (millions)", y = "Fraction of deaths from ambient PM pollution / All risk factors") +
+  labs(x="PM-Equivalant * population (millions)", y = "Fraction of deaths from ambient PM pollution / All_Cause") +
   theme_bw()+
   theme(text = element_text(size = 14),
         axis.text.x = element_text(angle = 90, hjust = 0.5, vjust = 0.5)) +
@@ -374,17 +380,17 @@ ggplot(data=filter(GBD_population_PM_BioBAvg,
 
 #fraction of all deaths from ambient PM pollution, open burning average
 ggplot(data=filter(GBD_population_PM_BioBAvg, iso %in% c("chn", "usa", "ind", "idn", "cod", "fra", "deu", "pol", "gbr"),
-                   rei_name == "Ambient PM pollution / All risk factors",
+                   rei_name == "Ambient PM pollution / All_Cause",
                    measure_name == "Deaths"),
        aes(x = pm_pop/1000000, y = val, color = year)) +
   geom_point(size = 6) +
   geom_text(data=filter(GBD_population_PM_BioBAvg, iso %in% c("chn", "usa", "ind", "idn", "cod", "fra", "deu", "pol", "gbr"),
-                        rei_name == "Ambient PM pollution / All risk factors",
+                        rei_name == "Ambient PM pollution / All_Cause",
                         measure_name == "Deaths",
                         inflection_point == TRUE),
             aes(label = year), size = 3, hjust=1, vjust=-0.5, color = "black") +
   facet_wrap(~location_name, scales = "free") +
-  labs(x="PM-Equivalant * population (millions)", y = "Fraction of deaths from ambient PM pollution / All risk factors") +
+  labs(x="PM-Equivalant * population (millions)", y = "Fraction of deaths from ambient PM pollution / All_Cause") +
   theme_bw()+
   theme(text = element_text(size = 14),
         axis.text.x = element_text(angle = 90, hjust = 0.5, vjust = 0.5)) +
@@ -417,7 +423,7 @@ ggplot(data=filter(PM_composition,
 #average open burning data
 ggplot(data=filter(PM_composition_BioBAvg,
                    iso %in% c("chn", "usa", "ind", "idn", "cod", "fra", "deu", "pol", "gbr"),
-                   year %in% c(1990:2017)),
+                   year %in% c(1990:2019)),
        aes(x=year, y=total_pm, fill=species)) +
   geom_area()+
   facet_wrap(~iso, scales = "free", labeller = labeller(iso = c("chn" = "China",
@@ -439,7 +445,7 @@ ggplot(data=filter(PM_composition_BioBAvg,
 # separating out PM-Equivalant from open burning
 ggplot(data=filter(PM_composition_open_burn_BioBAvg,
                    iso %in% c("chn", "usa", "ind", "idn", "cod", "fra", "deu", "pol", "gbr"),
-                   year %in% c(1990:2017)),
+                   year %in% c(1990:2019)),
        aes(x=year, y=value, fill=emissions_type)) +
   geom_area()+
   facet_wrap(~iso, scales = "free", labeller = labeller(iso = c("chn" = "China",

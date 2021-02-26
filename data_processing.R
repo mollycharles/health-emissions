@@ -7,8 +7,16 @@ options(scipen = 999)
 
 # Read in data -------------------------------------------------------------------------------------
 
-# Global burden of disease data
-GBD <- readr::read_csv("./data/IHME-GBD_2017_DATA-3ca98db6-1.csv") 
+# Global burden of disease data - risks
+GBD_risks <- bind_rows(readr::read_csv("./data/GBD/IHME-GBD_2019_DATA-456b8705-1(risks).csv"),
+                       readr::read_csv("./data/GBD/IHME-GBD_2019_DATA-456b8705-2(risks).csv"),
+                       readr::read_csv("./data/GBD/IHME-GBD_2019_DATA-456b8705-3(risks).csv") ) 
+
+# Global burden of disease data - all cause (mortality and DALYS)
+GBD_All_Cause <- readr::read_csv("./data/GBD/IHME-GBD_2019_DATA-d9e9f53c-1(all_cause).csv") 
+# Add column with made-up rei_name to match risk data
+GBD_All_Cause$rei_name <- "All_Cause"
+GBD <- bind_rows(GBD_risks, GBD_All_Cause)
 
 # CEDS data by species
 CEDS_BC <- readr::read_csv("./data/CEDS(2.10.21)/BC_total_CEDS_emissions.csv")
@@ -83,8 +91,8 @@ GFED_SO2 <- bind_rows(readr::read_csv("./data/1750-2015_v1.2_Emissions_bulk_em/S
 
 
 # GBD's country groupings
-sdi_groups <- readr::read_csv("./data/IHME_GBD_2017_SDI_2017_QUINTILES_Y2018M11D08.CSV") 
-cntry_groups <- readxl::read_xlsx("./data/IHME_GBD_2017_CODEBOOK/IHME_GBD_2017_ALL_LOCATIONS_HIERARCHIES_Y2018M11D18.XLSX")
+sdi_groups <- readr::read_csv("./data/GBD/IHME_GBD_2017_SDI_2017_QUINTILES_Y2018M11D08.CSV") 
+cntry_groups <- readxl::read_xlsx("./data/GBD/IHME_GBD_2017_CODEBOOK/IHME_GBD_2017_ALL_LOCATIONS_HIERARCHIES_Y2018M11D18.XLSX")
 
 # get location IDs for countries within each World Bank income group, G20, and OECD
 
@@ -153,7 +161,7 @@ countries_id <- unique(natl_co2_em$location_id)
 CEDS_years <- paste0("X", 1750:2019)
 CEDS_years_noX <- gsub(".*X", "", CEDS_years)
 
-GBD_years <- paste0("X", 1990:2017)
+GBD_years <- paste0("X", 1990:2019)
 GBD_years_noX <- gsub(".*X", "", GBD_years)
 
 GFED_years <- paste0("X", 1750:2015)
@@ -165,15 +173,16 @@ GFED_years_noX <- gsub(".*X", "", GFED_years)
 # calculate shares of deaths/DALYs due to various causes
 
 GBD_shares <- GBD %>%
+  filter( metric_name == "Number" ) %>%
   # remove unecessary variables (same across all observations)
   select(-c(sex_id, sex_name, age_id, age_name, cause_id, cause_name, metric_id, metric_name)) %>%
   # remove upper and lower range (not using this for now)
   select(-c(upper, lower, rei_id)) %>%
   spread(rei_name, val) %>%
   dplyr::mutate(`Air pollution / Environmental/occupational risks` = `Air pollution` / `Environmental/occupational risks`,
-                `Air pollution / All risk factors` = `Air pollution` / `All risk factors`,
-                `Environ-Occup / All risk factors` = `Environmental/occupational risks` / `All risk factors`,
-                `Ambient PM pollution / All risk factors` = `Ambient particulate matter pollution` / `All risk factors`) %>%
+                `Air pollution / All_Cause` = `Air pollution` / `All_Cause`,
+                `Environ-Occup / All_Cause` = `Environmental/occupational risks` / `All_Cause`,
+                `Ambient PM pollution / All_Cause` = `Ambient particulate matter pollution` / `All_Cause`) %>%
   dplyr::mutate(measure_name = if_else(measure_id == 2, "DALYs", measure_name)) %>%
   gather(-c(measure_id, measure_name, location_id, location_name, year), key = "rei_name", value = "val")
 
@@ -181,6 +190,7 @@ GBD_shares <- GBD %>%
 # same calculation as above, but group countries by SDI quintile
 
 GBD_shares_grouped <- GBD %>%
+  filter( metric_name == "Number" ) %>%
   # remove unecessary variables (same across all observations)
   select(-c(sex_id, sex_name, age_id, age_name, cause_id, cause_name, metric_id, metric_name)) %>%
   # remove upper and lower range (not using this for now)
@@ -192,9 +202,9 @@ GBD_shares_grouped <- GBD %>%
   ungroup() %>%
   spread(rei_name, val) %>%
   dplyr::mutate(`Air pollution / Environmental/occupational risks` = `Air pollution` / `Environmental/occupational risks`,
-                `Air pollution / All risk factors` = `Air pollution` / `All risk factors`,
-                `Environ-Occup / All risk factors` = `Environmental/occupational risks` / `All risk factors`,
-                `Ambient PM pollution / All risk factors` = `Ambient particulate matter pollution` / `All risk factors`) %>%
+                `Air pollution / All_Cause` = `Air pollution` / `All_Cause`,
+                `Environ-Occup / All_Cause` = `Environmental/occupational risks` / `All_Cause`,
+                `Ambient PM pollution / All_Cause` = `Ambient particulate matter pollution` / `All_Cause`) %>%
   dplyr::mutate(measure_name = if_else(measure_id == 2, "DALYs", measure_name)) %>%
   gather(-c(measure_id, measure_name, `SDI Quintile`, year), key = "rei_name", value = "val")
 
@@ -503,8 +513,8 @@ GBD_composite_PM_grouped <- GBD_shares_grouped %>%
                 select(-value) %>%
                 spread(year, value_10ya) %>%
               
-                # extend 2015 data out to 2017
-                dplyr::mutate(X2016 = X2015, X2017 = X2015)
+                # extend 2015 rolling average out to 2019
+                dplyr::mutate(X2016 = X2015, X2017 = X2015, X2018 = X2015, X2019 = X2015)
               
             }
 
@@ -731,23 +741,23 @@ GBD_population_PM_BioBAvg <- GBD_composite_PM_BioBAvg %>%
 extrap_years <- c(1850:1989) # years to extrapolate deaths for
 extrap_isos <- c("chn", "ind", "fra") # iso codes of countries to look at
 
-actual_years <- c(1990:2017) # years with actual data
+actual_years <- c(1990:2019) # years with actual data
 
 fra_PM_deaths_lm <- lm(formula = val ~ pm_pop, 
                        data=filter(GBD_population_PM, iso == "fra", year <= 2002, 
-                                   measure_name == "Deaths", rei_name == "Ambient PM pollution / All risk factors"))
+                                   measure_name == "Deaths", rei_name == "Ambient PM pollution / All_Cause"))
 ind_PM_deaths_lm <- lm(formula = val ~ pm_pop, 
                        data=filter(GBD_population_PM, iso == "ind", 
-                                   measure_name == "Deaths", rei_name == "Ambient PM pollution / All risk factors"))
+                                   measure_name == "Deaths", rei_name == "Ambient PM pollution / All_Cause"))
 chn_PM_deaths_lm <- lm(formula = val ~ pm_pop, 
                        data=filter(GBD_population_PM, iso == "chn", year <= 1996, 
-                                   measure_name == "Deaths", rei_name == "Ambient PM pollution / All risk factors"))
+                                   measure_name == "Deaths", rei_name == "Ambient PM pollution / All_Cause"))
 
 extrap_PM_deaths_frac <- composite_PM %>%
   left_join(CEDS_pop, by = c("iso", "year")) %>%
   dplyr::mutate(pm_pop = total_pm * pop) %>%
   na.omit() %>%
-  left_join(filter(GBD_shares, measure_name == "Deaths", rei_name == "Ambient PM pollution / All risk factors"), by = c("location_id", "year")) %>%
+  left_join(filter(GBD_shares, measure_name == "Deaths", rei_name == "Ambient PM pollution / All_Cause"), by = c("location_id", "year")) %>%
   select(c(iso, location_id, country, year, total_pm, FFI, non_FFI, `SDI Quintile`, rei_name, pop, pm_pop, val)) %>%
   filter(year %in% extrap_years,
          iso %in% extrap_isos)
@@ -756,7 +766,7 @@ actual_PM_deaths_frac <- composite_PM %>%
   left_join(CEDS_pop, by = c("iso", "year")) %>%
   dplyr::mutate(pm_pop = total_pm * pop) %>%
   na.omit() %>%
-  left_join(filter(GBD_shares, measure_name == "Deaths", rei_name == "Ambient PM pollution / All risk factors"), by = c("location_id", "year")) %>%
+  left_join(filter(GBD_shares, measure_name == "Deaths", rei_name == "Ambient PM pollution / All_Cause"), by = c("location_id", "year")) %>%
   select(c(iso, location_id, country, year, total_pm, FFI, non_FFI, `SDI Quintile`, rei_name, pop, pm_pop, val)) %>%
   filter(year %in% actual_years,
          iso %in% extrap_isos)
