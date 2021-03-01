@@ -10,7 +10,7 @@ create_y_label <- function( health_indicator, measure ) {
   return( y_label )
 }
 
-DO_ANNIMATION <- FALSE
+DO_ANNIMATION <- TRUE
 
 em_species <- c("BC", "CH4", "CO", "NH3", "NMVOC", "NOx", "OC", "SO2")
 
@@ -48,7 +48,7 @@ for (i in seq_along(health_indicators)) {
            y = create_y_label( health_indicator, measure ) ) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
-      scale_x_continuous(labels = scales::percent_format(accuracy = 1L)) +
+      scale_x_reverse(limits = c(1, 0), labels = scales::percent_format(accuracy = 1L)) +
       scale_color_manual(name = "Socio-Demographic Index",
                          values = brewer.pal(5, "Set1")) +   
       scale_fill_manual(name = "Socio-Demographic Index",
@@ -153,8 +153,7 @@ for (i in seq_along(health_indicators)) {
            y = paste(measure, "from", health_indicator)) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
-      scale_x_continuous(limits = c(0, NA),
-                         labels = scales::percent_format(accuracy = 1L)) +
+      scale_x_reverse(limits = c(1, 0), labels = scales::percent_format(accuracy = 1L))  +
       scale_color_manual(name = "Country",
                          values = brewer.pal(length(plot_countries), "Dark2")) +
       scale_fill_manual(name = "Country",
@@ -194,7 +193,7 @@ for (i in seq_along(health_indicators)) {
            y = paste(measure, "from", health_indicator)) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
-      scale_x_continuous(labels = scales::percent_format(accuracy = 1L)) +
+      scale_x_reverse(limits = c(1, 0), labels = scales::percent_format(accuracy = 1L)) +
       scale_color_manual(name = "Socio-Demographic Index",
                          values = brewer.pal(5, "Set1")) +   
       scale_fill_manual(name = "Socio-Demographic Index",
@@ -241,7 +240,7 @@ for (i in seq_along(em_species)) {
          y = paste(measure, "from", health_indicator)) +
     scale_y_continuous(limits = c(0, NA),
                        labels = scales::percent_format(accuracy = 1L)) +
-    scale_x_continuous(labels = scales::percent_format(accuracy = 1L)) +
+    scale_x_reverse(limits = c(1, 0), labels = scales::percent_format(accuracy = 1L)) +
     scale_color_manual(name = "Socio-Demographic Index",
                        values = brewer.pal(5, "Set1")) +   
     scale_fill_manual(name = "Socio-Demographic Index",
@@ -290,7 +289,7 @@ for (i in seq_along(em_species)) {
          y = paste(measure, "from", health_indicator)) +
     scale_y_continuous(limits = c(0, NA),
                        labels = scales::percent_format(accuracy = 1L)) +
-    scale_x_continuous(labels = scales::percent_format(accuracy = 1L)) +
+    scale_x_reverse(limits = c(1, 0), labels = scales::percent_format(accuracy = 1L)) +
     scale_color_manual(name = "Socio-Demographic Index",
                         values = brewer.pal(5, "Set1")) +   
     scale_fill_manual(name = "Socio-Demographic Index",
