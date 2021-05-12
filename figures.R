@@ -2,15 +2,16 @@ source("./data_processing.R")
 
 library(gganimate)
 library(RColorBrewer)
+library(gifski)
 
 # ------- Helper function
 create_y_label <- function( health_indicator, measure ) {
   health_indicator_label <- if_else(health_indicator == "Air pollution / All_Cause", "Air Pollution", "Environ-Occup")
-  y_label <- paste(measure, "From", health_indicator_label)
+  y_label <- paste(measure, "Attributable to", health_indicator_label)
   return( y_label )
 }
 
-DO_ANNIMATION <- TRUE
+DO_ANNIMATION <- FALSE
 
 em_species <- c("BC", "CH4", "CO", "NH3", "NMVOC", "NOx", "OC", "SO2")
 
@@ -44,7 +45,7 @@ for (i in seq_along(health_indicators)) {
       geom_point(data=filter(GBD_composite_PM_grouped_BioBAvg, measure_name == measure, rei_name == health_indicator),
                  aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
       transition_time(as.integer(year)) +
-      labs(title = "Year: {frame_time}", x="Fossil_Industrial Fraction of PM-Equivalant Emissions", 
+      labs(title = "Year: {frame_time}", x="Fossil/Industrial Fraction of PM-Equivalant Emissions", 
            y = create_y_label( health_indicator, measure ) ) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
@@ -92,7 +93,7 @@ for (i in seq_along(health_indicators)) {
       # open point for 1990
       geom_point(data=filter(GBD_composite_PM_grouped_BioBAvg, measure_name == measure, rei_name == health_indicator, year==1990),
                  aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, shape = `SDI Quintile`), size = 4) +
-      labs(x="Fossil Fraction of PM-Equivalant Emissions", 
+      labs(x="Fossil/Industrial Fraction of PM-Equivalant Emissions", 
            y = create_y_label( health_indicator, measure ) ) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
@@ -149,7 +150,7 @@ for (i in seq_along(health_indicators)) {
       transition_time(as.integer(year)) +
       #shadow_trail(distance = 1, size = 4) +
       shadow_mark(past = TRUE, future = FALSE, size = 1) +
-      labs(title = "Year: {frame_time}", x="Fossil Fraction of PM-Equivalant Emissions", 
+      labs(title = "Year: {frame_time}", x="Fossil/Industrial Fraction of PM-Equivalant Emissions", 
            y = paste(measure, "from", health_indicator)) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
@@ -167,7 +168,7 @@ for (i in seq_along(health_indicators)) {
   }
 }
 }
-# PM-Equivalant (yearly open burning data), animated ---------------------------------------------------------
+# PM-Equivalent (yearly open burning data), animated ---------------------------------------------------------
 
 GBD_composite_PM$`SDI Quintile` <- factor(GBD_composite_PM$`SDI Quintile`, levels = SDI_groups)
 
@@ -189,7 +190,7 @@ for (i in seq_along(health_indicators)) {
       geom_point(data=filter(GBD_composite_PM_grouped, year %in% plot_years, measure_name == measure, rei_name == health_indicator),
                  aes(x=FFI_fraction, y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
       transition_time(as.integer(year)) +
-      labs(title = "Year: {frame_time}", x="Fossil Fraction of PM-Equivalant Emissions", 
+      labs(title = "Year: {frame_time}", x="Fossil/Industrial Fraction of PM-Equivalant Emissions", 
            y = paste(measure, "from", health_indicator)) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
@@ -236,7 +237,7 @@ for (i in seq_along(em_species)) {
     geom_point(data=filter(df_grouped, year %in% plot_years, measure_name == measure, rei_name == health_indicator),
                aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
     transition_time(as.integer(year)) +
-    labs(title = paste(em_species[i]), subtitle = "Year: {frame_time}", x="Fossil Fraction of Emissions", 
+    labs(title = paste(em_species[i]), subtitle = "Year: {frame_time}", x="Fossil/Industrial Fraction of Emissions", 
          y = paste(measure, "from", health_indicator)) +
     scale_y_continuous(limits = c(0, NA),
                        labels = scales::percent_format(accuracy = 1L)) +
@@ -285,7 +286,7 @@ for (i in seq_along(em_species)) {
                aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, fill = `SDI Quintile`), size = 4, shape = "-") +
     # geom_text(data=filter(df_grouped, measure_name == measure, rei_name == health_indicator, year %in% c(1990:plot_year)), 
     #            mapping = aes(x=(FFI_fraction), y=val, label = year), stat = "identity") +
-    labs(title = paste(em_species[i]), subtitle = plot_year, x="Fossil Fraction of Emissions", 
+    labs(title = paste(em_species[i]), subtitle = plot_year, x="Fossil/Industrial Fraction of Emissions", 
          y = paste(measure, "from", health_indicator)) +
     scale_y_continuous(limits = c(0, NA),
                        labels = scales::percent_format(accuracy = 1L)) +
@@ -334,6 +335,7 @@ ggplot(data=filter(GBD_population_PM,
             aes(label = year), size = 3, hjust=1.25, vjust=-0.5, color = "black") +
   facet_wrap(~location_name, scales = "free") +
   labs(x="PM-Equivalant * population (millions)", y = "Deaths from ambient PM pollution") +
+  scale_x_reverse(limits = c(1, 0)) +
   theme_bw()+
   theme(text = element_text(size = 14),
         axis.text.x = element_text(angle = 90, hjust = 0.5, vjust = 0.5)) +
@@ -472,12 +474,11 @@ p <-
              aes(x=(FFI / total_pm), y=val, color = iso, fill = iso,  shape = iso), size = 8) +
   shadow_mark(past = TRUE, future = FALSE, size = 1) +
   transition_time(as.integer(year)) +
-  labs(title = "Year: {frame_time}", x="Fossil_Industrial Fraction of PM-Equivalant Emissions", 
+  labs(title = "Year: {frame_time}", x="Fossil/Industrial Fraction of PM-Equivalant Emissions", 
        y = "Fraction of Deaths from Ambient PM Pollution") +
   scale_y_continuous(limits = c(0, NA),
                      labels = scales::percent_format(accuracy = 1L)) +
-  scale_x_continuous(limits = c(0, NA),
-                     labels = scales::percent_format(accuracy = 1L)) +
+  scale_x_reverse(limits = c(1, 0), labels = scales::percent_format(accuracy = 1L)) +
   scale_color_manual(name = "Country",
                      values = brewer.pal(3, "Dark2"),
                      labels = c("fra" = "France", "chn" = "China", "ind" = "India")) +
@@ -491,3 +492,4 @@ p <-
   animate(p, nframes = 200, fps = 5, start_pause = 5, end_pause = 20)
   anim_save(filename="./figures/selected_countries_PM_share_deaths_extrap.gif")
 }
+

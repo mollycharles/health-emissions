@@ -381,7 +381,7 @@ FFI_fraction_grouped <- function(CEDS_in, GFED_in) {
 PM_CF_BC <-	1
 PM_CF_NH3	<- 0.5
 PM_CF_NO2 <-	0.61
-PM_CF_SO2 <-	0.83
+PM_CF_SO2 <-	0.99
 PM_CF_OC_biomass <-	1.8
 PM_CF_OC_fossil	<- 1.3
 
