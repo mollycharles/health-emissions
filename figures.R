@@ -25,7 +25,7 @@ plot_theme <- theme_bw() + theme(text = element_text(size = 16),
                                  strip.text.x = element_text(size = 14),
                                  axis.text = element_text(size = 14))
 
-# PM-Equivalant (open burning average), animated ------------------------------------------------------------------------
+# PM-Equivalent (open burning average), animated ------------------------------------------------------------------------
 
 GBD_composite_PM_BioBAvg$`SDI Quintile` <- factor(GBD_composite_PM_BioBAvg$`SDI Quintile`, levels = SDI_groups)
 
@@ -45,7 +45,7 @@ for (i in seq_along(health_indicators)) {
       geom_point(data=filter(GBD_composite_PM_grouped_BioBAvg, measure_name == measure, rei_name == health_indicator),
                  aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
       transition_time(as.integer(year)) +
-      labs(title = "Year: {frame_time}", x="Fossil/Industrial Fraction of PM-Equivalant Emissions", 
+      labs(title = "Year: {frame_time}", x="Fossil/Industrial Fraction of PM-Equivalent Emissions", 
            y = create_y_label( health_indicator, measure ) ) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
@@ -64,7 +64,7 @@ for (i in seq_along(health_indicators)) {
 }
 }
 
-# PM-Equivalant (open burning average), still with trajectory lines -----------------------------------------------------------------
+# PM-Equivalent (open burning average), still with trajectory lines -----------------------------------------------------------------
 # this is the main plot
 
 for (i in seq_along(health_indicators)) {
@@ -93,7 +93,7 @@ for (i in seq_along(health_indicators)) {
       # open point for 1990
       geom_point(data=filter(GBD_composite_PM_grouped_BioBAvg, measure_name == measure, rei_name == health_indicator, year==1990),
                  aes(x=(FFI_fraction), y=val, color = `SDI Quintile`, shape = `SDI Quintile`), size = 4) +
-      labs(x="Fossil/Industrial Fraction of PM-Equivalant Emissions", 
+      labs(x="Fossil/Industrial Fraction of PM-Equivalent Emissions", 
            y = create_y_label( health_indicator, measure ) ) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
@@ -125,7 +125,7 @@ for (i in seq_along(health_indicators)) {
   }
 }
 
-# Major countries - PM-Equivalant (open burning average), animated ------------------------------------------------------------------------
+# Major countries - PM-Equivalent (open burning average), animated ------------------------------------------------------------------------
 
 if ( DO_ANNIMATION ) {
 for (i in seq_along(health_indicators)) {
@@ -150,7 +150,7 @@ for (i in seq_along(health_indicators)) {
       transition_time(as.integer(year)) +
       #shadow_trail(distance = 1, size = 4) +
       shadow_mark(past = TRUE, future = FALSE, size = 1) +
-      labs(title = "Year: {frame_time}", x="Fossil/Industrial Fraction of PM-Equivalant Emissions", 
+      labs(title = "Year: {frame_time}", x="Fossil/Industrial Fraction of PM-Equivalent Emissions", 
            y = paste(measure, "from", health_indicator)) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
@@ -190,7 +190,7 @@ for (i in seq_along(health_indicators)) {
       geom_point(data=filter(GBD_composite_PM_grouped, year %in% plot_years, measure_name == measure, rei_name == health_indicator),
                  aes(x=FFI_fraction, y=val, color = `SDI Quintile`, fill = `SDI Quintile`, shape = `SDI Quintile`), size = 8) +
       transition_time(as.integer(year)) +
-      labs(title = "Year: {frame_time}", x="Fossil/Industrial Fraction of PM-Equivalant Emissions", 
+      labs(title = "Year: {frame_time}", x="Fossil/Industrial Fraction of PM-Equivalent Emissions", 
            y = paste(measure, "from", health_indicator)) +
       scale_y_continuous(limits = c(0, NA),
                          labels = scales::percent_format(accuracy = 1L)) +
@@ -334,7 +334,7 @@ ggplot(data=filter(GBD_population_PM,
                         inflection_point == TRUE),
             aes(label = year), size = 3, hjust=1.25, vjust=-0.5, color = "black") +
   facet_wrap(~location_name, scales = "free") +
-  labs(x="PM-Equivalant * population (millions)", y = "Deaths from ambient PM pollution") +
+  labs(x="PM-Equivalent * population (millions)", y = "Deaths from ambient PM pollution") +
   scale_x_reverse(limits = c(1, 0)) +
   theme_bw()+
   theme(text = element_text(size = 14),
@@ -353,7 +353,7 @@ ggplot(data=filter(GBD_population_PM, iso %in% c("chn", "usa", "ind", "idn", "co
                         inflection_point == TRUE),
             aes(label = year), size = 3, hjust=1.25, vjust=-0.5, color = "black") +
   facet_wrap(~location_name, scales = "free") +
-  labs(x="PM-Equivalant * population (millions)", y = "Fraction of deaths from ambient PM pollution / All_Cause") +
+  labs(x="PM-Equivalent * population (millions)", y = "Fraction of deaths from ambient PM pollution / All_Cause") +
   theme_bw()+
   theme(text = element_text(size = 14),
         axis.text.x = element_text(angle = 90, hjust = 0.5, vjust = 0.5)) +
@@ -373,7 +373,7 @@ ggplot(data=filter(GBD_population_PM_BioBAvg,
                         inflection_point == TRUE),
             aes(label = year), size = 3, hjust=1.25, vjust=-0.25, color = "black") +
   facet_wrap(~location_name, scales = "free") +
-  labs(x="PM-Equivalant * population (millions)", y = "Deaths from ambient PM pollution") +
+  labs(x="PM-Equivalent * population (millions)", y = "Deaths from ambient PM pollution") +
   theme_bw()+
   theme(text = element_text(size = 14),
         axis.text.x = element_text(angle = 90, hjust = 0.5, vjust = 0.5)) +
@@ -391,7 +391,7 @@ ggplot(data=filter(GBD_population_PM_BioBAvg, iso %in% c("chn", "usa", "ind", "i
                         inflection_point == TRUE),
             aes(label = year), size = 3, hjust=1, vjust=-0.5, color = "black") +
   facet_wrap(~location_name, scales = "free") +
-  labs(x="PM-Equivalant * population (millions)", y = "Fraction of deaths from ambient PM pollution / All_Cause") +
+  labs(x="PM-Equivalent * population (millions)", y = "Fraction of deaths from ambient PM pollution / All_Cause") +
   theme_bw()+
   theme(text = element_text(size = 14),
         axis.text.x = element_text(angle = 90, hjust = 0.5, vjust = 0.5)) +
@@ -443,7 +443,7 @@ ggplot(data=filter(PM_composition_BioBAvg,
         strip.text.x = element_text(size = 12)) +
   ggsave("./figures/PM_composition_by_cntry_BioBAvg.png", height = 8.5, width = 11, units = "in")
 
-# separating out PM-Equivalant from open burning
+# separating out PM-Equivalent from open burning
 ggplot(data=filter(PM_composition_open_burn_BioBAvg,
                    iso %in% c("chn", "usa", "ind", "idn", "cod", "fra", "deu", "pol", "gbr"),
                    year %in% c(1990:2019)),
@@ -474,7 +474,7 @@ p <-
              aes(x=(FFI / total_pm), y=val, color = iso, fill = iso,  shape = iso), size = 8) +
   shadow_mark(past = TRUE, future = FALSE, size = 1) +
   transition_time(as.integer(year)) +
-  labs(title = "Year: {frame_time}", x="Fossil/Industrial Fraction of PM-Equivalant Emissions", 
+  labs(title = "Year: {frame_time}", x="Fossil/Industrial Fraction of PM-Equivalent Emissions", 
        y = "Fraction of Deaths from Ambient PM Pollution") +
   scale_y_continuous(limits = c(0, NA),
                      labels = scales::percent_format(accuracy = 1L)) +
